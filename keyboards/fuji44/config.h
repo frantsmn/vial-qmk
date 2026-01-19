@@ -1,0 +1,12 @@
+#pragma once
+
+#define MATRIX_ROWS 8
+#define MATRIX_COLS 6
+
+#define EE_HANDS
+
+#define SOFT_SERIAL_PIN GP1
+#define SPLIT_HAND_MATRIX_GRID GP21, GP4
+
+#define SPLIT_USB_DETECT
+#define SPLIT_WATCHDOG_ENABLE
