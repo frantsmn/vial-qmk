@@ -30,7 +30,7 @@
     "customKeycodes": [
         {
             "name": "SWITCH_LANG",
-            "title": "Switch languages (Win+Space)",
+            "title": "Switch languages (LCTL+1 | LCTL+2)",
             "shortName": "LANG"
         },
         {
@@ -43,20 +43,81 @@
             "title": "Switch to RU (LCTL+2)",
             "shortName": "RU"
         },
+
+
         {
-            "name": "Round brackets ()",
+            "name": "AT_EN",
+            "title": "@ EN",
+            "shortName": "@"
+        },
+        {
+            "name": "HASH_EN",
+            "title": "# EN",
+            "shortName": "#"
+        },
+        {
+            "name": "DOLLAR_EN",
+            "title": "$ EN",
+            "shortName": "$"
+        },
+        {
+            "name": "CARET_EN",
+            "title": "^ EN",
+            "shortName": "^"
+        },
+        {
+            "name": "AMP_EN",
+            "title": "& EN",
+            "shortName": "&"
+        },
+        {
+            "name": "VERBAR_EN",
+            "title": "| EN",
+            "shortName": "|"
+        },
+        {
+            "name": "QUEST_EN",
+            "title": "? EN",
+            "shortName": "?"
+        },
+        {
+            "name": "DOT_EN",
+            "title": ". EN",
+            "shortName": "."
+        },
+        {
+            "name": "COMMA_EN",
+            "title": ", EN",
+            "shortName": ","
+        },
+
+
+        {
+            "name": "LBRC_EN",
+            "title": "[ EN",
+            "shortName": "["
+        },
+        {
+            "name": "RBRC_EN",
+            "title": "] EN",
+            "shortName": "]"
+        },
+        {
+            "name": "LSFT_LBRC_EN",
+            "title": "{ EN",
+            "shortName": "{"
+        },
+        {
+            "name": "LSFT_RBRC_EN",
+            "title": "} EN",
+            "shortName": "}"
+        },
+
+
+        {
+            "name": "ROUND_BRCS",
             "title": "Round brackets () (keep mods)",
             "shortName": "()"
-        },
-        {
-            "name": "Square brackets []",
-            "title": "Square brackets [] (keep mods)",
-            "shortName": "[]"
-        },
-        {
-            "name": "Curly brackets {}",
-            "title": "Curly brackets {} (keep mods)",
-            "shortName": "{}"
         }
     ]
 }

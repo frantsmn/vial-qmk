@@ -1,5 +1,59 @@
 #include QMK_KEYBOARD_H
-// #include "eeconfig.h"
+
+typedef enum {
+    LANG_STATE_EN = 0,
+    LANG_STATE_RU = 1,
+} lang_state_t;
+
+lang_state_t current_lang = LANG_STATE_EN;
+
+void switch_to_en(void) {
+    register_code(KC_LCTL);
+    tap_code(KC_1);
+    unregister_code(KC_LCTL);
+    current_lang = LANG_STATE_EN;
+    return;
+}
+
+void switch_to_ru(void) {
+    register_code(KC_LCTL);
+    tap_code(KC_2);
+    unregister_code(KC_LCTL);
+    current_lang = LANG_STATE_RU;
+    return;
+}
+
+void switch_lang(void) {
+    switch (current_lang) {
+        case LANG_STATE_EN: {
+            switch_to_ru();
+            return;
+        }
+        case LANG_STATE_RU: {
+            switch_to_en();
+            return;
+        }
+    }
+    return;
+}
+
+void send_en_symbol(void (*send)(void)) {
+    lang_state_t prev = current_lang;
+
+    if (current_lang != LANG_STATE_EN) {
+        switch_to_en();
+        wait_ms(10);
+    }
+
+    send();
+
+    if (prev != LANG_STATE_EN) {
+        wait_ms(10);
+        switch_to_ru();
+    }
+    return;
+}
+
 
 // typedef enum {
 //     OS_WINDOWS = 0,
@@ -37,83 +91,202 @@ enum my_keycodes {
     SWITCH_LANG = QK_KB_0,
     LANG_EN,
     LANG_RU,
-    ROUND_BR_MOD,
-    SQUARE_BR_MOD,
-    CURLY_BR_MOD,
+
+    AT_EN,
+    HASH_EN,
+    DOLLAR_EN,
+    CARET_EN,
+    AMP_EN,
+    VERBAR_EN,
+    QUEST_EN,
+    DOT_EN,
+    COMMA_EN,
+
+    LBRC_EN,
+    RBRC_EN,
+    LSFT_LBRC_EN,
+    LSFT_RBRC_EN,
+
+    ROUND_BRCS,
+    // SQUARE_BRCS_EN,
+    // CURLY_BRCS_EN,
 };
 
+static void send_at(void) {
+    register_mods(MOD_LSFT);
+    tap_code(KC_2);
+    unregister_mods(MOD_LSFT);
+}
+static void send_hash(void) {
+    register_mods(MOD_LSFT);
+    tap_code(KC_3);
+    unregister_mods(MOD_LSFT);
+}
+static void send_dollar(void) {
+    register_mods(MOD_LSFT);
+    tap_code(KC_4);
+    unregister_mods(MOD_LSFT);
+}
+static void send_caret(void) {
+    register_mods(MOD_LSFT);
+    tap_code(KC_6);
+    unregister_mods(MOD_LSFT);
+}
+static void send_amp(void) {
+    register_mods(MOD_LSFT);
+    tap_code(KC_7);
+    unregister_mods(MOD_LSFT);
+}
+static void send_verbar(void) {
+    register_mods(MOD_LSFT);
+    tap_code(KC_NUBS);
+    unregister_mods(MOD_LSFT);
+}
+static void send_quest(void) {
+    register_mods(MOD_LSFT);
+    tap_code(KC_SLSH);
+    unregister_mods(MOD_LSFT);
+}
+static void send_dot(void) {
+    tap_code(KC_DOT);
+}
+static void send_comma(void) {
+    tap_code(KC_COMMA);
+}
+static void send_square_left_bracket(void) {
+    tap_code(KC_LBRC);
+}
+static void send_square_right_bracket(void) {
+    tap_code(KC_RBRC);
+}
+static void send_curly_left_bracket(void) {
+    register_mods(MOD_LSFT);
+    tap_code(KC_LBRC);
+    unregister_mods(MOD_LSFT);
+}
+static void send_curly_right_bracket(void) {
+    register_mods(MOD_LSFT);
+    tap_code(KC_RBRC);
+    unregister_mods(MOD_LSFT);
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (record->event.pressed) {
-        switch (keycode) {
+    if (!record->event.pressed) {
+        return true;
+    }
 
-            case ROUND_BR_MOD: {
-                uint8_t mods = get_mods();
-                clear_mods();
-                register_mods(MOD_LSFT);
-                tap_code16(KC_9);
-                tap_code16(KC_0);
-                unregister_mods(MOD_LSFT);
-                wait_ms(20);
+    switch (keycode) {
+        case SWITCH_LANG:
+            switch_lang();
+            return false;
+        case LANG_EN:
+            switch_to_en();
+            return false;
+        case LANG_RU:
+            switch_to_ru();
+            return false;
 
-                tap_code16(KC_LEFT);
+        // @
+        case AT_EN:
+            send_en_symbol(send_at);
+            return false;
+        // #
+        case HASH_EN:
+            send_en_symbol(send_hash);
+            return false;
+        // $
+        case DOLLAR_EN:
+            send_en_symbol(send_dollar);
+            return false;
+        // ^
+        case CARET_EN:
+            send_en_symbol(send_caret);
+            return false;
+        // &
+        case AMP_EN:
+            send_en_symbol(send_amp);
+            return false;
+        // |
+        case VERBAR_EN:
+            send_en_symbol(send_verbar);
+            return false;
+        // ?
+        case QUEST_EN:
+            send_en_symbol(send_quest);
+            return false;
+        // .
+        case DOT_EN:
+            send_en_symbol(send_dot);
+            return false;
+        // ,
+        case COMMA_EN:
+            send_en_symbol(send_comma);
+            return false;
 
-                set_mods(mods);
-                return false;
-            }
+        // [
+        case LBRC_EN:
+            send_en_symbol(send_square_left_bracket);
+            return false;
+        // ]
+        case RBRC_EN:
+            send_en_symbol(send_square_right_bracket);
+            return false;
+        // {
+        case LSFT_LBRC_EN:
+            send_en_symbol(send_curly_left_bracket);
+            return false;
+        // }
+        case LSFT_RBRC_EN:
+            send_en_symbol(send_curly_right_bracket);
+            return false;
 
-            case SQUARE_BR_MOD: {
-                uint8_t mods = get_mods();
-                clear_mods();
+        // (|)
+        case ROUND_BRCS: {
+            uint8_t mods = get_mods();
+            clear_mods();
+            register_mods(MOD_LSFT);
+            tap_code16(KC_9);
+            tap_code16(KC_0);
+            unregister_mods(MOD_LSFT);
+            wait_ms(20);
 
-                tap_code16(KC_LBRC);
-                tap_code16(KC_RBRC);
-                wait_ms(20);
+            tap_code16(KC_LEFT);
 
-                tap_code16(KC_LEFT);
-
-                set_mods(mods);
-                return false;
-            }
-
-            case CURLY_BR_MOD: {
-                uint8_t mods = get_mods();
-                clear_mods();
-
-                register_mods(MOD_LSFT);
-                tap_code16(KC_LBRC);
-                tap_code16(KC_RBRC);
-                unregister_mods(MOD_LSFT);
-                wait_ms(20);
-
-                tap_code16(KC_LEFT);
-
-                set_mods(mods);
-                return false;
-            }
-
-            case SWITCH_LANG: {
-                register_code(KC_LGUI);
-                tap_code(KC_SPC);
-                unregister_code(KC_LGUI);
-                return false;
-            }
-
-            case LANG_EN: {
-                register_code(KC_LCTL);
-                tap_code(KC_1);
-                unregister_code(KC_LCTL);
-                // tap_code(KC_F21);
-                return false;
-            }
-
-            case LANG_RU: {
-                register_code(KC_LCTL);
-                tap_code(KC_2);
-                unregister_code(KC_LCTL);
-                // tap_code(KC_F22);
-                return false;
-            }
+            set_mods(mods);
+            return false;
         }
+
+        // // [|]
+        // case SQUARE_BRCS_EN: {
+        //     uint8_t mods = get_mods();
+        //     clear_mods();
+
+        //     tap_code16(KC_LBRC);
+        //     tap_code16(KC_RBRC);
+        //     wait_ms(20);
+
+        //     tap_code16(KC_LEFT);
+
+        //     set_mods(mods);
+        //     return false;
+        // }
+
+        // // {|}
+        // case CURLY_BRCS_EN: {
+        //     uint8_t mods = get_mods();
+        //     clear_mods();
+
+        //     register_mods(MOD_LSFT);
+        //     tap_code16(KC_LBRC);
+        //     tap_code16(KC_RBRC);
+        //     unregister_mods(MOD_LSFT);
+        //     wait_ms(20);
+
+        //     tap_code16(KC_LEFT);
+
+        //     set_mods(mods);
+        //     return false;
+        // }
     }
 
     return true;
