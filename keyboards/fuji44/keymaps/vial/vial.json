@@ -52,13 +52,13 @@
         },
         {
             "name": "HASH_EN",
-            "title": "# EN",
-            "shortName": "#"
+            "title": "# @ EN",
+            "shortName": "# @"
         },
         {
             "name": "DOLLAR_EN",
-            "title": "$ EN",
-            "shortName": "$"
+            "title": "$ % EN",
+            "shortName": "$ %"
         },
         {
             "name": "CARET_EN",
@@ -67,8 +67,8 @@
         },
         {
             "name": "AMP_EN",
-            "title": "& EN",
-            "shortName": "&"
+            "title": "& | EN",
+            "shortName": "& |"
         },
         {
             "name": "VERBAR_EN",
@@ -77,8 +77,8 @@
         },
         {
             "name": "QUEST_EN",
-            "title": "? EN",
-            "shortName": "?"
+            "title": "? * EN",
+            "shortName": "? *"
         },
         {
             "name": "DOT_EN",

@@ -54,28 +54,22 @@ void send_en_symbol(void (*send)(void)) {
     return;
 }
 
+void send_ru_symbol(void (*send)(void)) {
+    lang_state_t prev = current_lang;
 
-// typedef enum {
-//     OS_WINDOWS = 0,
-//     OS_LINUX   = 1,
-// } os_mode_t;
+    if (current_lang != LANG_STATE_RU) {
+        switch_to_ru();
+        wait_ms(10);
+    }
 
-// typedef union {
-//     uint32_t raw;
-//     struct {
-//         uint8_t os_mode;
-//     };
-// } user_config_t;
+    send();
 
-// static user_config_t user_config;
-
-// void keyboard_post_init_user(void) {
-//     user_config.raw = eeconfig_read_user();
-
-//     if (user_config.os_mode > OS_LINUX) {
-//         user_config.os_mode = OS_WINDOWS;
-//     }
-// }
+    if (prev != LANG_STATE_RU) {
+        wait_ms(10);
+        switch_to_en();
+    }
+    return;
+}
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -170,10 +164,26 @@ static void send_curly_right_bracket(void) {
     unregister_mods(MOD_LSFT);
 }
 
+// Работает одинаково на RU и EN
+static void send_asterisk(void) {
+    register_mods(MOD_LSFT);
+    tap_code(KC_8);
+    unregister_mods(MOD_LSFT);
+}
+// Работает одинаково на RU и EN
+static void send_percent(void) {
+    register_mods(MOD_LSFT);
+    tap_code(KC_5);
+    unregister_mods(MOD_LSFT);
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!record->event.pressed) {
         return true;
     }
+
+    const uint8_t mods = get_mods();
+    const bool shifted = (mods & MOD_MASK_SHIFT) != 0;
 
     switch (keycode) {
         case SWITCH_LANG:
@@ -191,29 +201,65 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             send_en_symbol(send_at);
             return false;
         // #
-        case HASH_EN:
-            send_en_symbol(send_hash);
+        case HASH_EN: {
+            del_mods(MOD_MASK_SHIFT); // убрать моды
+
+            if (shifted) {
+                send_en_symbol(send_at);          // @ (+ shift)
+            } else {
+                send_en_symbol(send_hash);        // #
+            }
+
+            set_mods(mods); // вернуть моды
             return false;
+        }
         // $
-        case DOLLAR_EN:
-            send_en_symbol(send_dollar);
+        case DOLLAR_EN: {
+            del_mods(MOD_MASK_SHIFT); // убрать моды
+
+            if (shifted) {
+                send_percent();                         // % (+ shift)
+            } else {
+                send_en_symbol(send_dollar);      // $
+            }
+
+            set_mods(mods); // вернуть моды
             return false;
+        }
         // ^
         case CARET_EN:
             send_en_symbol(send_caret);
             return false;
         // &
-        case AMP_EN:
-            send_en_symbol(send_amp);
+        case AMP_EN: {
+            del_mods(MOD_MASK_SHIFT); // убрать моды
+
+            if (shifted) {
+                send_en_symbol(send_verbar);      // | (+ shift)
+            } else {
+                send_en_symbol(send_amp);         // &
+            }
+
+            set_mods(mods); // вернуть моды
             return false;
+        }
         // |
         case VERBAR_EN:
             send_en_symbol(send_verbar);
             return false;
         // ?
-        case QUEST_EN:
-            send_en_symbol(send_quest);
+        case QUEST_EN: {
+            del_mods(MOD_MASK_SHIFT); // убрать моды
+
+            if (shifted) {
+                send_asterisk();                        // * (+ shift)
+            } else {
+                send_en_symbol(send_quest);        // ?
+            }
+
+            set_mods(mods); // вернуть моды
             return false;
+        }
         // .
         case DOT_EN:
             send_en_symbol(send_dot);
@@ -287,6 +333,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         //     set_mods(mods);
         //     return false;
         // }
+
+        // Shift + "ь" => "ъ" только для RU
+        case KC_M: {
+            if (current_lang == LANG_STATE_EN) {
+                return true; // en игнорируем
+            }
+
+            if (!shifted) {
+                return true; // без shit будет напечатана "ь"
+            }
+
+            del_mods(MOD_MASK_SHIFT);
+
+            send_ru_symbol(send_square_right_bracket);
+
+            set_mods(mods);
+            return false;
+        }
     }
 
     return true;
