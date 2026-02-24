@@ -6,3 +6,5 @@ QMK_SETTINGS = yes
 
 REPEAT_KEY_ENABLE = no
 LAYER_LOCK_ENABLE = no
+
+SRC += symbols.c

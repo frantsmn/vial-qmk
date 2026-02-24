@@ -51,34 +51,14 @@
             "shortName": "@"
         },
         {
-            "name": "HASH_EN",
-            "title": "# @ EN",
-            "shortName": "# @"
-        },
-        {
-            "name": "DOLLAR_EN",
-            "title": "$ % EN",
-            "shortName": "$ %"
-        },
-        {
             "name": "CARET_EN",
             "title": "^ EN",
             "shortName": "^"
         },
         {
-            "name": "AMP_EN",
-            "title": "& | EN",
-            "shortName": "& |"
-        },
-        {
             "name": "VERBAR_EN",
             "title": "| EN",
             "shortName": "|"
-        },
-        {
-            "name": "QUEST_EN",
-            "title": "? * EN",
-            "shortName": "? *"
         },
         {
             "name": "DOT_EN",
@@ -92,6 +72,48 @@
         },
 
 
+        {
+            "name": "HASH_EN",
+            "title": "# @ EN",
+            "shortName": "# @"
+        },
+        {
+            "name": "DOLLAR_EN",
+            "title": "$ % EN",
+            "shortName": "$ %"
+        },
+        {
+            "name": "AMP_EN",
+            "title": "& | EN",
+            "shortName": "& |"
+        },
+        {
+            "name": "QUEST_EN",
+            "title": "? ! EN",
+            "shortName": "? !"
+        },
+        {
+            "name": "QUOTES_EN",
+            "title": "' \" EN",
+            "shortName": "' \""
+        },
+        {
+            "name": "SEMICOLON_EN",
+            "title": "; : EN",
+            "shortName": "; :"
+        },
+
+
+        {
+            "name": "L_BRCS_EN",
+            "title": "([ EN",
+            "shortName": "(["
+        },
+        {
+            "name": "R_BRCS_EN",
+            "title": ")] EN",
+            "shortName": ")]"
+        },
         {
             "name": "LBRC_EN",
             "title": "[ EN",
