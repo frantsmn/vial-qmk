@@ -47,7 +47,9 @@ void send_semicolon(void) {
 }
 
 void send_colon(void) {
+    register_mods(MOD_LSFT);
     tap_code(KC_SCLN);
+    unregister_mods(MOD_LSFT);
 }
 
 void send_single_quote(void) {
