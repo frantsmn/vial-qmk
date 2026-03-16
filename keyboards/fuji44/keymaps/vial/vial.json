@@ -70,6 +70,16 @@
             "title": ", EN",
             "shortName": ","
         },
+        {
+            "name": "ANGLE_LT_EN",
+            "title": "< EN",
+            "shortName": "<"
+        },
+        {
+            "name": "ANGLE_GT_EN",
+            "title": "> EN",
+            "shortName": ">"
+        },
 
 
         {
@@ -94,8 +104,8 @@
         },
         {
             "name": "QUOTES_EN",
-            "title": "' \" EN",
-            "shortName": "' \""
+            "title": "\" ' EN",
+            "shortName": "\" '"
         },
         {
             "name": "SEMICOLON_EN",
@@ -105,24 +115,34 @@
 
 
         {
-            "name": "L_BRCS_EN",
+            "name": "L_SBRC_EN",
             "title": "([ EN",
             "shortName": "(["
         },
         {
-            "name": "R_BRCS_EN",
+            "name": "R_SBRC_EN",
             "title": ")] EN",
             "shortName": ")]"
         },
         {
+            "name": "L_CBRC_EN",
+            "title": "({ EN",
+            "shortName": "({"
+        },
+        {
+            "name": "R_CBRC_EN",
+            "title": ")} EN",
+            "shortName": ")}"
+        },
+        {
             "name": "LBRC_EN",
-            "title": "[ EN",
-            "shortName": "["
+            "title": "[{ EN",
+            "shortName": "[{"
         },
         {
             "name": "RBRC_EN",
-            "title": "] EN",
-            "shortName": "]"
+            "title": "]} EN",
+            "shortName": "]}"
         },
         {
             "name": "LSFT_LBRC_EN",

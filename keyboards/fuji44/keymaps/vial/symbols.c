@@ -70,6 +70,18 @@ void send_comma(void) {
     tap_code(KC_COMMA);
 }
 
+void send_less(void) {
+    register_mods(MOD_LSFT);
+    tap_code(KC_COMMA);
+    unregister_mods(MOD_LSFT);
+}
+
+void send_greater(void) {
+    register_mods(MOD_LSFT);
+    tap_code(KC_DOT);
+    unregister_mods(MOD_LSFT);
+}
+
 void send_square_left_bracket(void) {
     tap_code(KC_LBRC);
 }

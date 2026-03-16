@@ -13,6 +13,8 @@ enum my_keycodes {
     VERBAR_EN,              // |
     DOT_EN,                 // .
     COMMA_EN,               // ,
+    ANGLE_LT_EN,            // <
+    ANGLE_GT_EN,            // >
 
     HASH_EN,                // #@
     DOLLAR_EN,              // $%
@@ -21,10 +23,13 @@ enum my_keycodes {
     QUOTES_EN,              // '"
     SEMICOLON_EN,           // ;:
 
-    L_BRCS_EN,              // ([
-    R_BRCS_EN,              // )]
-    LBRC_EN,                // [
-    RBRC_EN,                // ]
+    L_SBRC_EN,              // ([
+    R_SBRC_EN,              // )]
+    L_CBRC_EN,              // ({
+    R_CBRC_EN,              // )}
+
+    LBRC_EN,                // [{
+    RBRC_EN,                // ]}
     LSFT_LBRC_EN,           // {
     LSFT_RBRC_EN,           // }
 
@@ -147,6 +152,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case COMMA_EN:                                  // ,
             send_en_symbol(send_comma);
             return false;
+        case ANGLE_LT_EN:                               // <
+            send_en_symbol(send_less);
+            return false;
+        case ANGLE_GT_EN:                               // >
+            send_en_symbol(send_greater);
+            return false;
 
 
         // -------------
@@ -199,19 +210,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         }
-        case QUOTES_EN: {                               // ' "
+        case QUOTES_EN: {                               // " '
             del_mods(MOD_MASK_SHIFT);
 
             if (shifted) {
-                send_en_symbol(send_double_quote); // "
-            } else {
                 send_en_symbol(send_single_quote); // '
+            } else {
+                send_en_symbol(send_double_quote); // "
             }
 
             set_mods(mods);
             return false;
         }
-        case SEMICOLON_EN: {                // ;:
+        case SEMICOLON_EN: {                // :;
             del_mods(MOD_MASK_SHIFT);
 
             if (shifted) {
@@ -229,7 +240,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // BRACES
         // ------
 
-        case L_BRCS_EN: // ([
+        case L_SBRC_EN: // ([
             if (shifted) {
                 clear_mods();
                 send_en_symbol(send_square_left_bracket);
@@ -240,7 +251,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_mods(MOD_LSFT);
             }
             return false;
-            case R_BRCS_EN: // )]
+        case R_SBRC_EN: // )]
             if (shifted) {
                 clear_mods();
                 send_en_symbol(send_square_right_bracket);
@@ -251,19 +262,55 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_mods(MOD_LSFT);
             }
             return false;
-        case LBRC_EN: // [
-            send_en_symbol(send_square_left_bracket);
+        case L_CBRC_EN: // ({
+            if (shifted) {
+                clear_mods();
+                send_en_symbol(send_curly_left_bracket);
+                set_mods(mods);
+            } else {
+                register_mods(MOD_LSFT);
+                tap_code16(KC_9);
+                unregister_mods(MOD_LSFT);
+            }
             return false;
-        case RBRC_EN: // ]
-            send_en_symbol(send_square_right_bracket);
+        case R_CBRC_EN: // )}
+            if (shifted) {
+                clear_mods();
+                send_en_symbol(send_curly_right_bracket);
+                set_mods(mods);
+            } else {
+                register_mods(MOD_LSFT);
+                tap_code16(KC_0);
+                unregister_mods(MOD_LSFT);
+            }
             return false;
-        // {
-        case LSFT_LBRC_EN:
+        case LBRC_EN: // [{
+            if (shifted) {
+                clear_mods();
+                send_en_symbol(send_curly_left_bracket);
+                set_mods(mods);
+            } else {
+                send_en_symbol(send_square_left_bracket);
+            }
+            return false;
+        case RBRC_EN: // ]}
+            if (shifted) {
+                clear_mods();
+                send_en_symbol(send_curly_right_bracket);
+                set_mods(mods);
+            } else {
+                send_en_symbol(send_square_right_bracket);
+            }
+            return false;
+        case LSFT_LBRC_EN: // {
+            clear_mods();
             send_en_symbol(send_curly_left_bracket);
+            set_mods(mods);
             return false;
-        // }
-        case LSFT_RBRC_EN:
+        case LSFT_RBRC_EN: // }
+            clear_mods();
             send_en_symbol(send_curly_right_bracket);
+            set_mods(mods);
             return false;
 
         // (|)

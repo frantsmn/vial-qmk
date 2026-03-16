@@ -14,8 +14,13 @@ void send_single_quote(void);
 void send_double_quote(void);
 void send_dot(void);
 void send_comma(void);
+
+void send_less(void);
+void send_greater(void);
+
 void send_square_left_bracket(void);
 void send_square_right_bracket(void);
+
 void send_curly_left_bracket(void);
 void send_curly_right_bracket(void);
 
