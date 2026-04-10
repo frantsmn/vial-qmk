@@ -84,18 +84,18 @@
 
         {
             "name": "HASH_EN",
-            "title": "# @ EN",
-            "shortName": "# @"
+            "title": "# EN",
+            "shortName": "#"
         },
         {
             "name": "DOLLAR_EN",
-            "title": "$ % EN",
-            "shortName": "$ %"
+            "title": "$ EN",
+            "shortName": "$"
         },
         {
             "name": "AMP_EN",
-            "title": "& | EN",
-            "shortName": "& |"
+            "title": "& EN",
+            "shortName": "&"
         },
         {
             "name": "QUEST_EN",
@@ -160,6 +160,12 @@
             "name": "ROUND_BRCS",
             "title": "Round brackets () (keep mods)",
             "shortName": "()"
+        },
+
+        {
+            "name": "ARROW_FN",
+            "title": "JS arrow =>",
+            "shortName": "=>"
         }
     ]
 }

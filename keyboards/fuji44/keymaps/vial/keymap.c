@@ -16,9 +16,9 @@ enum my_keycodes {
     ANGLE_LT_EN,            // <
     ANGLE_GT_EN,            // >
 
-    HASH_EN,                // #@
-    DOLLAR_EN,              // $%
-    AMP_EN,                 // &|
+    HASH_EN,                // #
+    DOLLAR_EN,              // $
+    AMP_EN,                 // &
     QUEST_EN,               // ?!
     QUOTES_EN,              // '"
     SEMICOLON_EN,           // ;:
@@ -34,6 +34,7 @@ enum my_keycodes {
     LSFT_RBRC_EN,           // }
 
     ROUND_BRCS,             // ()
+    ARROW_FN,               // =>
     // SQUARE_BRCS_EN,
     // CURLY_BRCS_EN,
 };
@@ -109,6 +110,11 @@ void send_ru_symbol(void (*send)(void)) {
     return;
 }
 
+void send_fat_arrow(void) {
+    tap_code(KC_EQL);
+    send_greater();
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!record->event.pressed) {
         return true;
@@ -140,6 +146,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case AT_EN:                                     // @
             send_en_symbol(send_at);
             return false;
+        case HASH_EN: {                                 // #
+            send_en_symbol(send_hash);
+            return false;
+        }
+        case DOLLAR_EN: {                               // $
+            send_en_symbol(send_dollar);
+            return false;
+        }
+        case AMP_EN: {                                  // &
+            send_en_symbol(send_amp);
+            return false;
+        }
         case CARET_EN:                                  // ^
             send_en_symbol(send_caret);
             return false;
@@ -163,43 +181,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // -------------
         // SHIFTED CHARS
         // -------------
-
-        case HASH_EN: {                                 // # @
-            del_mods(MOD_MASK_SHIFT);
-
-            if (shifted) {
-                send_en_symbol(send_at);          // @
-            } else {
-                send_en_symbol(send_hash);        // #
-            }
-
-            set_mods(mods);
-            return false;
-        }
-        case DOLLAR_EN: {                               // $ %
-            del_mods(MOD_MASK_SHIFT);
-
-            if (shifted) {
-                send_percent();                         // %
-            } else {
-                send_en_symbol(send_dollar);      // $
-            }
-
-            set_mods(mods);
-            return false;
-        }
-        case AMP_EN: {                                  // & |
-            del_mods(MOD_MASK_SHIFT);
-
-            if (shifted) {
-                send_en_symbol(send_verbar);      // |
-            } else {
-                send_en_symbol(send_amp);         // &
-            }
-
-            set_mods(mods);
-            return false;
-        }
         case QUEST_EN: {                                // ?!
             if (shifted) {
                 tap_code16(KC_1);                       // !
@@ -328,6 +309,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             set_mods(mods);
             return false;
         }
+
+        case ARROW_FN: // =>
+            send_en_symbol(send_fat_arrow);
+            return false;
 
         // // [|]
         // case SQUARE_BRCS_EN: {
