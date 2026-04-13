@@ -372,3 +372,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     return true;
 }
+
+// TAPPING_TERM для LSFT_T(KC_A) и RSFT_T(KC_SCLN) = 145 ms
+uint16_t get_tapping_term_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LSFT_T(KC_A):
+        case RSFT_T(KC_SCLN):
+            return 145;
+        default:
+            return TAPPING_TERM;
+    }
+}
