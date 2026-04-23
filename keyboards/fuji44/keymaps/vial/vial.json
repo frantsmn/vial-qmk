@@ -115,34 +115,34 @@
 
 
         {
-            "name": "L_SBRC_EN",
-            "title": "([ EN",
-            "shortName": "(["
+            "name": "MINUS_EQUAL",
+            "title": "- =",
+            "shortName": "- ="
         },
         {
             "name": "R_SBRC_EN",
-            "title": ")] EN",
-            "shortName": ")]"
+            "title": "...",
+            "shortName": "..."
         },
         {
             "name": "L_CBRC_EN",
             "title": "({ EN",
-            "shortName": "({"
+            "shortName": "( {"
         },
         {
             "name": "R_CBRC_EN",
             "title": ")} EN",
-            "shortName": ")}"
+            "shortName": ") }"
         },
         {
             "name": "LBRC_EN",
-            "title": "[{ EN",
-            "shortName": "[{"
+            "title": "[ EN",
+            "shortName": "["
         },
         {
             "name": "RBRC_EN",
-            "title": "]} EN",
-            "shortName": "]}"
+            "title": "] EN",
+            "shortName": "]"
         },
         {
             "name": "LSFT_LBRC_EN",

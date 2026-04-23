@@ -23,7 +23,7 @@ enum my_keycodes {
     QUOTES_EN,              // '"
     SEMICOLON_EN,           // ;:
 
-    L_SBRC_EN,              // ([
+    MINUS_EQUAL,            // -=
     R_SBRC_EN,              // )]
     L_CBRC_EN,              // ({
     R_CBRC_EN,              // )}
@@ -221,21 +221,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // BRACES
         // ------
 
-        case L_SBRC_EN: // ([
+        case MINUS_EQUAL: // - =
             if (shifted) {
                 clear_mods();
-                send_en_symbol(send_square_left_bracket);
+                tap_code(KC_EQUAL);
                 set_mods(mods);
             } else {
-                register_mods(MOD_LSFT);
-                tap_code16(KC_9);
-                unregister_mods(MOD_LSFT);
+                tap_code16(KC_MINUS);
             }
             return false;
-        case R_SBRC_EN: // )]
+        case R_SBRC_EN: // 0
             if (shifted) {
                 clear_mods();
-                send_en_symbol(send_square_right_bracket);
+                tap_code16(KC_0);
                 set_mods(mods);
             } else {
                 register_mods(MOD_LSFT);
@@ -265,23 +263,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_mods(MOD_LSFT);
             }
             return false;
-        case LBRC_EN: // [{
-            if (shifted) {
-                clear_mods();
-                send_en_symbol(send_curly_left_bracket);
-                set_mods(mods);
-            } else {
-                send_en_symbol(send_square_left_bracket);
-            }
+        case LBRC_EN: // [
+            clear_mods();
+            send_en_symbol(send_square_left_bracket);
+            set_mods(mods);
             return false;
-        case RBRC_EN: // ]}
-            if (shifted) {
-                clear_mods();
-                send_en_symbol(send_curly_right_bracket);
-                set_mods(mods);
-            } else {
-                send_en_symbol(send_square_right_bracket);
-            }
+        case RBRC_EN: // ]
+            clear_mods();
+            send_en_symbol(send_square_right_bracket);
+            set_mods(mods);
             return false;
         case LSFT_LBRC_EN: // {
             clear_mods();
@@ -373,12 +363,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-// TAPPING_TERM для LSFT_T(KC_A) и RSFT_T(KC_SCLN) = 145 ms
+// TAPPING_TERM для LSFT_T(KC_A) и RSFT_T(KC_SCLN) = 140 ms
 uint16_t get_tapping_term_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LSFT_T(KC_A):
         case RSFT_T(KC_SCLN):
-            return 145;
+            return 140;
         default:
             return TAPPING_TERM;
     }
