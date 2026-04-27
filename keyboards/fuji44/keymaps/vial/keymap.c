@@ -21,10 +21,10 @@ enum my_keycodes {
     AMP_EN,                 // &
     QUEST_EN,               // ?!
     QUOTES_EN,              // '"
-    SEMICOLON_EN,           // ;:
+    COLON_SEMICOLON_EN,     // :;
+    SEMICOLON_EN,           // ;
 
     MINUS_EQUAL,            // -=
-    R_SBRC_EN,              // )]
     L_CBRC_EN,              // ({
     R_CBRC_EN,              // )}
 
@@ -35,6 +35,8 @@ enum my_keycodes {
 
     ROUND_BRCS,             // ()
     ARROW_FN,               // =>
+    SINGLE_QUOTE_EN,        // '
+
     // SQUARE_BRCS_EN,
     // CURLY_BRCS_EN,
 };
@@ -45,6 +47,43 @@ typedef enum {
 } lang_state_t;
 
 lang_state_t current_lang = LANG_STATE_EN;
+
+typedef struct {
+    uint8_t mods;
+#ifndef NO_ACTION_ONESHOT
+    uint8_t oneshot_mods;
+#endif
+} mod_state_t;
+
+static mod_state_t save_mod_state(void) {
+    mod_state_t state = {
+        .mods = get_mods(),
+#ifndef NO_ACTION_ONESHOT
+        .oneshot_mods = get_oneshot_mods(),
+#endif
+    };
+
+    return state;
+}
+
+static uint8_t get_effective_mods(mod_state_t state) {
+#ifndef NO_ACTION_ONESHOT
+    return state.mods | state.oneshot_mods;
+#else
+    return state.mods;
+#endif
+}
+
+static void clear_active_mods(void) {
+    clear_mods();
+#ifndef NO_ACTION_ONESHOT
+    clear_oneshot_mods();
+#endif
+}
+
+static void restore_held_mods(mod_state_t state) {
+    set_mods(state.mods);
+}
 
 void switch_to_en(void) {
     register_code(KC_LCTL);
@@ -120,8 +159,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return true;
     }
 
-    const uint8_t mods = get_mods();
-    const bool shifted = (mods & MOD_MASK_SHIFT) != 0;
+    const mod_state_t mod_state = save_mod_state();
+    const uint8_t effective_mods = get_effective_mods(mod_state);
+    const bool shifted = (effective_mods & MOD_MASK_SHIFT) != 0;
 
     switch (keycode) {
         // -----------
@@ -185,14 +225,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (shifted) {
                 tap_code16(KC_1);                       // !
             } else {
-                del_mods(MOD_MASK_SHIFT);
+                clear_active_mods();
                 send_en_symbol(send_quest);       // ?
-                set_mods(mods);
+                restore_held_mods(mod_state);
             }
             return false;
         }
         case QUOTES_EN: {                               // " '
-            del_mods(MOD_MASK_SHIFT);
+            clear_active_mods();
 
             if (shifted) {
                 send_en_symbol(send_single_quote); // '
@@ -200,11 +240,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 send_en_symbol(send_double_quote); // "
             }
 
-            set_mods(mods);
+            restore_held_mods(mod_state);
             return false;
         }
-        case SEMICOLON_EN: {                // :;
-            del_mods(MOD_MASK_SHIFT);
+        case SINGLE_QUOTE_EN: {                    // '
+            clear_active_mods();
+            send_en_symbol(send_single_quote);
+            restore_held_mods(mod_state);
+            return false;
+        }
+        case COLON_SEMICOLON_EN: {               // :;
+            clear_active_mods();
 
             if (shifted) {
               send_en_symbol(send_semicolon);   // ;
@@ -212,40 +258,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
               send_en_symbol(send_colon);       // :
             }
 
-            set_mods(mods);
+            restore_held_mods(mod_state);
             return false;
         }
+        case SEMICOLON_EN:                      // ;
+            clear_active_mods();
+            send_en_symbol(send_semicolon);
+            restore_held_mods(mod_state);
+            return false;
 
 
         // ------
         // BRACES
         // ------
-
         case MINUS_EQUAL: // - =
             if (shifted) {
-                clear_mods();
+                clear_active_mods();
                 tap_code(KC_EQUAL);
-                set_mods(mods);
+                restore_held_mods(mod_state);
             } else {
                 tap_code16(KC_MINUS);
             }
             return false;
-        case R_SBRC_EN: // 0
-            if (shifted) {
-                clear_mods();
-                tap_code16(KC_0);
-                set_mods(mods);
-            } else {
-                register_mods(MOD_LSFT);
-                tap_code16(KC_0);
-                unregister_mods(MOD_LSFT);
-            }
-            return false;
         case L_CBRC_EN: // ({
             if (shifted) {
-                clear_mods();
+                clear_active_mods();
                 send_en_symbol(send_curly_left_bracket);
-                set_mods(mods);
+                restore_held_mods(mod_state);
             } else {
                 register_mods(MOD_LSFT);
                 tap_code16(KC_9);
@@ -254,9 +293,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case R_CBRC_EN: // )}
             if (shifted) {
-                clear_mods();
+                clear_active_mods();
                 send_en_symbol(send_curly_right_bracket);
-                set_mods(mods);
+                restore_held_mods(mod_state);
             } else {
                 register_mods(MOD_LSFT);
                 tap_code16(KC_0);
@@ -264,30 +303,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         case LBRC_EN: // [
-            clear_mods();
+            clear_active_mods();
             send_en_symbol(send_square_left_bracket);
-            set_mods(mods);
+            restore_held_mods(mod_state);
             return false;
         case RBRC_EN: // ]
-            clear_mods();
+            clear_active_mods();
             send_en_symbol(send_square_right_bracket);
-            set_mods(mods);
+            restore_held_mods(mod_state);
             return false;
         case LSFT_LBRC_EN: // {
-            clear_mods();
+            clear_active_mods();
             send_en_symbol(send_curly_left_bracket);
-            set_mods(mods);
+            restore_held_mods(mod_state);
             return false;
         case LSFT_RBRC_EN: // }
-            clear_mods();
+            clear_active_mods();
             send_en_symbol(send_curly_right_bracket);
-            set_mods(mods);
+            restore_held_mods(mod_state);
             return false;
 
         // (|)
         case ROUND_BRCS: {
-            uint8_t mods = get_mods();
-            clear_mods();
+            clear_active_mods();
             register_mods(MOD_LSFT);
             tap_code16(KC_9);
             tap_code16(KC_0);
@@ -296,13 +334,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
             tap_code16(KC_LEFT);
 
-            set_mods(mods);
+            restore_held_mods(mod_state);
             return false;
         }
 
-        case ARROW_FN: // =>
+        // =>
+        case ARROW_FN: {
+            clear_active_mods();
             send_en_symbol(send_fat_arrow);
+            restore_held_mods(mod_state);
             return false;
+        }
 
         // // [|]
         // case SQUARE_BRCS_EN: {
@@ -351,11 +393,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true; // без shit будет напечатана "ь"
             }
 
-            del_mods(MOD_MASK_SHIFT);
+            clear_active_mods();
 
             send_ru_symbol(send_square_right_bracket);
 
-            set_mods(mods);
+            restore_held_mods(mod_state);
             return false;
         }
     }
@@ -367,7 +409,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 uint16_t get_tapping_term_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LSFT_T(KC_A):
-        case RSFT_T(KC_SCLN):
+//         case RSFT_T(KC_SCLN):
             return 140;
         default:
             return TAPPING_TERM;

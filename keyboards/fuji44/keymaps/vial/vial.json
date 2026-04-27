@@ -108,9 +108,14 @@
             "shortName": "\" '"
         },
         {
-            "name": "SEMICOLON_EN",
+            "name": "COLON_SEMICOLON_EN",
             "title": ": ; EN",
             "shortName": ": ;"
+        },
+        {
+            "name": "SEMICOLON_EN",
+            "title": "; EN",
+            "shortName": ";"
         },
 
 
@@ -118,11 +123,6 @@
             "name": "MINUS_EQUAL",
             "title": "- =",
             "shortName": "- ="
-        },
-        {
-            "name": "R_SBRC_EN",
-            "title": "...",
-            "shortName": "..."
         },
         {
             "name": "L_CBRC_EN",
@@ -166,6 +166,12 @@
             "name": "ARROW_FN",
             "title": "JS arrow =>",
             "shortName": "=>"
+        },
+
+        {
+            "name": "SINGLE_QUOTE_EN",
+            "title": "' EN",
+            "shortName": "'"
         }
     ]
 }
