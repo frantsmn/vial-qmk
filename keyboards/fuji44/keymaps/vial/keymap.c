@@ -19,26 +19,19 @@ enum my_keycodes {
     HASH_EN,                // #
     DOLLAR_EN,              // $
     AMP_EN,                 // &
-    QUEST_EN,               // ?!
-    QUOTES_EN,              // '"
-    COLON_SEMICOLON_EN,     // :;
+    USER_QUEST,             // ?!
+    USER_QUOTES,            // '"
+    SINGLE_QUOTE_EN,        // '
+    USER_COLON,             // :;
     SEMICOLON_EN,           // ;
 
+    LSBRC_EN,               // [
+    RSBRC_EN,               // ]
+    LCBRC_EN,               // {
+    RCBRC_EN,               // }
+
     MINUS_EQUAL,            // -=
-    L_CBRC_EN,              // ({
-    R_CBRC_EN,              // )}
-
-    LBRC_EN,                // [{
-    RBRC_EN,                // ]}
-    LSFT_LBRC_EN,           // {
-    LSFT_RBRC_EN,           // }
-
-    ROUND_BRCS,             // ()
     ARROW_FN,               // =>
-    SINGLE_QUOTE_EN,        // '
-
-    // SQUARE_BRCS_EN,
-    // CURLY_BRCS_EN,
 };
 
 typedef enum {
@@ -116,43 +109,35 @@ void switch_lang(void) {
 }
 
 void send_en_symbol(void (*send)(void)) {
-    lang_state_t prev = current_lang;
-
     if (current_lang != LANG_STATE_EN) {
         switch_to_en();
         wait_ms(10);
+        send();
+        wait_ms(1);
+        switch_to_ru();
+        return;
     }
 
     send();
-
-    if (prev != LANG_STATE_EN) {
-        wait_ms(10);
-        switch_to_ru();
-    }
     return;
 }
 
-void send_ru_symbol(void (*send)(void)) {
-    lang_state_t prev = current_lang;
-
-    if (current_lang != LANG_STATE_RU) {
-        switch_to_ru();
-        wait_ms(10);
-    }
-
-    send();
-
-    if (prev != LANG_STATE_RU) {
-        wait_ms(10);
-        switch_to_en();
-    }
-    return;
-}
-
-void send_fat_arrow(void) {
-    tap_code(KC_EQL);
-    send_greater();
-}
+// void send_ru_symbol(void (*send)(void)) {
+//     lang_state_t prev = current_lang;
+//
+//     if (current_lang != LANG_STATE_RU) {
+//         switch_to_ru();
+//         wait_ms(10);
+//     }
+//
+//     send();
+//
+//     if (prev != LANG_STATE_RU) {
+//         wait_ms(10);
+//         switch_to_en();
+//     }
+//     return;
+// }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!record->event.pressed) {
@@ -167,7 +152,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // -----------
         // LANG SWITCH
         // -----------
-
         case SWITCH_LANG:                               // EN <-> RU
             switch_lang();
             return false;
@@ -182,22 +166,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // ------------
         // SINGLE CHARS
         // ------------
-
         case AT_EN:                                     // @
             send_en_symbol(send_at);
             return false;
-        case HASH_EN: {                                 // #
+        case HASH_EN:                                   // #
             send_en_symbol(send_hash);
             return false;
-        }
-        case DOLLAR_EN: {                               // $
+        case DOLLAR_EN:                                 // $
             send_en_symbol(send_dollar);
             return false;
-        }
-        case AMP_EN: {                                  // &
+        case AMP_EN:                                    // &
             send_en_symbol(send_amp);
             return false;
-        }
         case CARET_EN:                                  // ^
             send_en_symbol(send_caret);
             return false;
@@ -221,47 +201,61 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // -------------
         // SHIFTED CHARS
         // -------------
-        case QUEST_EN: {                                // ?!
-            if (shifted) {
-                tap_code16(KC_1);                       // !
-            } else {
-                clear_active_mods();
-                send_en_symbol(send_quest);       // ?
-                restore_held_mods(mod_state);
-            }
-            return false;
-        }
-        case QUOTES_EN: {                               // " '
+        case USER_QUEST: {                                  // ?!  Учитывает язык раскладки
             clear_active_mods();
 
             if (shifted) {
-                send_en_symbol(send_single_quote); // '
+                send_exclamation();                         // !
             } else {
-                send_en_symbol(send_double_quote); // "
+                if (current_lang == LANG_STATE_EN)
+                    send_quest();                           // ?
+                else
+                    send_ru_quest();                        // ?
             }
 
             restore_held_mods(mod_state);
             return false;
         }
-        case SINGLE_QUOTE_EN: {                    // '
+        case USER_QUOTES: {                                 // "' Учитывает язык раскладки (только для ")
+            clear_active_mods();
+
+            if (shifted) {
+                send_en_symbol(send_single_quote);          // ' На EN раскладке
+            } else {
+                if (current_lang == LANG_STATE_EN)
+                    send_double_quote();                    // "
+                else
+                    send_ru_double_quote();                 // "
+            }
+
+            restore_held_mods(mod_state);
+            return false;
+        }
+        case SINGLE_QUOTE_EN: {                             // ' На EN раскладке
             clear_active_mods();
             send_en_symbol(send_single_quote);
             restore_held_mods(mod_state);
             return false;
         }
-        case COLON_SEMICOLON_EN: {               // :;
+        case USER_COLON: {                                  // :; Учитывает язык раскладки
             clear_active_mods();
 
             if (shifted) {
-              send_en_symbol(send_semicolon);   // ;
+                if (current_lang == LANG_STATE_EN)
+                    send_semicolon();                       // ;
+                else
+                    send_ru_semicolon();                    // ;
             } else {
-              send_en_symbol(send_colon);       // :
+                if (current_lang == LANG_STATE_EN)
+                    send_colon();                           // :
+                else
+                    send_ru_colon();                        // :
             }
 
             restore_held_mods(mod_state);
             return false;
         }
-        case SEMICOLON_EN:                      // ;
+        case SEMICOLON_EN:                                  // ; На EN раскладке
             clear_active_mods();
             send_en_symbol(send_semicolon);
             restore_held_mods(mod_state);
@@ -271,7 +265,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // ------
         // BRACES
         // ------
-        case MINUS_EQUAL: // - =
+        case LSBRC_EN:
+            clear_active_mods();
+            send_en_symbol(send_left_square_bracket);       // [
+            restore_held_mods(mod_state);
+            return false;
+        case RSBRC_EN:
+            clear_active_mods();
+            send_en_symbol(send_right_square_bracket);      // ]
+            restore_held_mods(mod_state);
+            return false;
+        case LCBRC_EN:
+            clear_active_mods();
+            send_en_symbol(send_left_curly_bracket);        // {
+            restore_held_mods(mod_state);
+            return false;
+        case RCBRC_EN:
+            clear_active_mods();
+            send_en_symbol(send_right_curly_bracket);       // }
+            restore_held_mods(mod_state);
+            return false;
+
+
+        // ------
+        // MISC
+        // ------
+        case MINUS_EQUAL: // -=
             if (shifted) {
                 clear_active_mods();
                 tap_code(KC_EQUAL);
@@ -280,123 +299,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code16(KC_MINUS);
             }
             return false;
-        case L_CBRC_EN: // ({
-            if (shifted) {
-                clear_active_mods();
-                send_en_symbol(send_curly_left_bracket);
-                restore_held_mods(mod_state);
-            } else {
-                register_mods(MOD_LSFT);
-                tap_code16(KC_9);
-                unregister_mods(MOD_LSFT);
-            }
-            return false;
-        case R_CBRC_EN: // )}
-            if (shifted) {
-                clear_active_mods();
-                send_en_symbol(send_curly_right_bracket);
-                restore_held_mods(mod_state);
-            } else {
-                register_mods(MOD_LSFT);
-                tap_code16(KC_0);
-                unregister_mods(MOD_LSFT);
-            }
-            return false;
-        case LBRC_EN: // [
-            clear_active_mods();
-            send_en_symbol(send_square_left_bracket);
-            restore_held_mods(mod_state);
-            return false;
-        case RBRC_EN: // ]
-            clear_active_mods();
-            send_en_symbol(send_square_right_bracket);
-            restore_held_mods(mod_state);
-            return false;
-        case LSFT_LBRC_EN: // {
-            clear_active_mods();
-            send_en_symbol(send_curly_left_bracket);
-            restore_held_mods(mod_state);
-            return false;
-        case LSFT_RBRC_EN: // }
-            clear_active_mods();
-            send_en_symbol(send_curly_right_bracket);
-            restore_held_mods(mod_state);
-            return false;
-
-        // (|)
-        case ROUND_BRCS: {
-            clear_active_mods();
-            register_mods(MOD_LSFT);
-            tap_code16(KC_9);
-            tap_code16(KC_0);
-            unregister_mods(MOD_LSFT);
-            wait_ms(20);
-
-            tap_code16(KC_LEFT);
-
-            restore_held_mods(mod_state);
-            return false;
-        }
-
-        // =>
-        case ARROW_FN: {
+        case ARROW_FN: // =>
             clear_active_mods();
             send_en_symbol(send_fat_arrow);
             restore_held_mods(mod_state);
             return false;
-        }
-
-        // // [|]
-        // case SQUARE_BRCS_EN: {
-        //     uint8_t mods = get_mods();
-        //     clear_mods();
-
-        //     tap_code16(KC_LBRC);
-        //     tap_code16(KC_RBRC);
-        //     wait_ms(20);
-
-        //     tap_code16(KC_LEFT);
-
-        //     set_mods(mods);
-        //     return false;
-        // }
-
-        // // {|}
-        // case CURLY_BRCS_EN: {
-        //     uint8_t mods = get_mods();
-        //     clear_mods();
-
-        //     register_mods(MOD_LSFT);
-        //     tap_code16(KC_LBRC);
-        //     tap_code16(KC_RBRC);
-        //     unregister_mods(MOD_LSFT);
-        //     wait_ms(20);
-
-        //     tap_code16(KC_LEFT);
-
-        //     set_mods(mods);
-        //     return false;
-        // }
 
 
         // -------
         // RUSSIAN
         // -------
-
-        // Shift + "ь" => "ъ" только для RU
-        case KC_M: {
+        case KC_M: {                                        // Shift + "ь" => "ъ" только для RU
             if (current_lang == LANG_STATE_EN) {
-                return true; // en игнорируем
+                return true;                                // en игнорируем
             }
 
             if (!shifted) {
-                return true; // без shit будет напечатана "ь"
+                return true;                                // без shit будет напечатана "ь"
             }
 
             clear_active_mods();
-
-            send_ru_symbol(send_square_right_bracket);
-
+            send_right_square_bracket();                    // с shit будет напечатана "ъ"
             restore_held_mods(mod_state);
             return false;
         }
@@ -405,13 +328,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-// TAPPING_TERM для LSFT_T(KC_A) и RSFT_T(KC_SCLN) = 140 ms
-uint16_t get_tapping_term_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case LSFT_T(KC_A):
+// TAPPING_TERM для LSFT_T(KC_A) и RSFT_T(KC_SCLN) = 145 ms
+// uint16_t get_tapping_term_user(uint16_t keycode, keyrecord_t *record) {
+//     switch (keycode) {
+//         case LSFT_T(KC_A):
 //         case RSFT_T(KC_SCLN):
-            return 140;
-        default:
-            return TAPPING_TERM;
-    }
-}
+//             return 145;
+//         default:
+//             return TAPPING_TERM;
+//     }
+// }

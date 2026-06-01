@@ -44,7 +44,6 @@
             "shortName": "RU"
         },
 
-
         {
             "name": "AT_EN",
             "title": "@ EN",
@@ -81,7 +80,6 @@
             "shortName": ">"
         },
 
-
         {
             "name": "HASH_EN",
             "title": "# EN",
@@ -98,18 +96,23 @@
             "shortName": "&"
         },
         {
-            "name": "QUEST_EN",
-            "title": "? ! EN",
+            "name": "USER_QUEST",
+            "title": "? !",
             "shortName": "? !"
         },
         {
-            "name": "QUOTES_EN",
+            "name": "USER_QUOTES",
             "title": "\" ' EN",
             "shortName": "\" '"
         },
         {
-            "name": "COLON_SEMICOLON_EN",
-            "title": ": ; EN",
+            "name": "SINGLE_QUOTE_EN",
+            "title": "' EN",
+            "shortName": "'"
+        },
+        {
+            "name": "USER_COLON",
+            "title": ": ;",
             "shortName": ": ;"
         },
         {
@@ -118,6 +121,26 @@
             "shortName": ";"
         },
 
+        {
+            "name": "LSBRC_EN",
+            "title": "[ EN",
+            "shortName": "["
+        },
+        {
+            "name": "RSBRC_EN",
+            "title": "] EN",
+            "shortName": "]"
+        },
+        {
+            "name": "LCBRC_EN",
+            "title": "{ EN",
+            "shortName": "{"
+        },
+        {
+            "name": "RCBRC_EN",
+            "title": "} EN",
+            "shortName": "}"
+        },
 
         {
             "name": "MINUS_EQUAL",
@@ -125,53 +148,9 @@
             "shortName": "- ="
         },
         {
-            "name": "L_CBRC_EN",
-            "title": "({ EN",
-            "shortName": "( {"
-        },
-        {
-            "name": "R_CBRC_EN",
-            "title": ")} EN",
-            "shortName": ") }"
-        },
-        {
-            "name": "LBRC_EN",
-            "title": "[ EN",
-            "shortName": "["
-        },
-        {
-            "name": "RBRC_EN",
-            "title": "] EN",
-            "shortName": "]"
-        },
-        {
-            "name": "LSFT_LBRC_EN",
-            "title": "{ EN",
-            "shortName": "{"
-        },
-        {
-            "name": "LSFT_RBRC_EN",
-            "title": "} EN",
-            "shortName": "}"
-        },
-
-
-        {
-            "name": "ROUND_BRCS",
-            "title": "Round brackets () (keep mods)",
-            "shortName": "()"
-        },
-
-        {
             "name": "ARROW_FN",
-            "title": "JS arrow =>",
+            "title": "=>",
             "shortName": "=>"
-        },
-
-        {
-            "name": "SINGLE_QUOTE_EN",
-            "title": "' EN",
-            "shortName": "'"
         }
     ]
 }
