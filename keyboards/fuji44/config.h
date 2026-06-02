@@ -10,3 +10,8 @@
 
 #define SPLIT_USB_DETECT
 #define SPLIT_WATCHDOG_ENABLE
+
+/* Settings */
+#define TAPPING_TERM 170
+#define QUICK_TAP_TERM 0
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY

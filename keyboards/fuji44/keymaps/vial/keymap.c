@@ -3,6 +3,15 @@
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {};
 
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case SFT_T(KC_QUOTE):
+            return true;
+        default:
+            return false;
+    }
+}
+
 enum my_keycodes {
     SWITCH_LANG = QK_KB_0,
     LANG_EN,
