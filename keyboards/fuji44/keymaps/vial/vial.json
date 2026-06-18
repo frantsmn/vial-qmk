@@ -151,6 +151,11 @@
             "name": "ARROW_FN",
             "title": "=>",
             "shortName": "=>"
+        },
+        {
+            "name": "DOT_COMMA_RUEN",
+            "title": "., RUEN",
+            "shortName": ".,"
         }
     ]
 }

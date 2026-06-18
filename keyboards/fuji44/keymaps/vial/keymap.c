@@ -41,6 +41,8 @@ enum my_keycodes {
 
     MINUS_EQUAL,            // -=
     ARROW_FN,               // =>
+
+    DOT_COMMA_RUEN,         // .,
 };
 
 typedef enum {
@@ -259,6 +261,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     send_colon();                           // :
                 else
                     send_ru_colon();                        // :
+            }
+
+            restore_held_mods(mod_state);
+            return false;
+        }
+        case DOT_COMMA_RUEN: {                                  // ., Учитывает язык раскладки
+            clear_active_mods();
+
+            if (shifted) {
+                if (current_lang == LANG_STATE_EN)
+                    send_comma();                           // ,
+                else
+                    send_ru_comma();                        // ,
+            } else {
+                if (current_lang == LANG_STATE_EN)
+                    send_dot();                             // .
+                else
+                    send_ru_dot();                          // .
             }
 
             restore_held_mods(mod_state);

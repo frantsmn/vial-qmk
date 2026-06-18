@@ -18,7 +18,9 @@ void send_single_quote(void);
 void send_double_quote(void);
 void send_ru_double_quote(void);
 void send_dot(void);
+void send_ru_dot(void);
 void send_comma(void);
+void send_ru_comma(void);
 
 void send_less(void);
 void send_greater(void);

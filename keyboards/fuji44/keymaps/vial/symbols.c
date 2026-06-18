@@ -95,8 +95,18 @@ void send_dot(void) {
     tap_code(KC_DOT);
 }
 
+void send_ru_dot(void) {
+    tap_code(KC_SLASH);
+}
+
 void send_comma(void) {
     tap_code(KC_COMMA);
+}
+
+void send_ru_comma(void) {
+    register_mods(MOD_LSFT);
+    tap_code(KC_SLASH);
+    unregister_mods(MOD_LSFT);
 }
 
 void send_less(void) {
