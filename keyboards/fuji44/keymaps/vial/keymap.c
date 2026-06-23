@@ -28,7 +28,7 @@ enum my_keycodes {
     HASH_EN,                // #
     DOLLAR_EN,              // $
     AMP_EN,                 // &
-    USER_QUEST,             // ?!
+    QUEST_RUEN,             // ?
     USER_QUOTES,            // '"
     SINGLE_QUOTE_EN,        // '
     USER_COLON,             // :;
@@ -43,6 +43,9 @@ enum my_keycodes {
     ARROW_FN,               // =>
 
     DOT_COMMA_RUEN,         // .,
+
+    LBRC_RUEN,              // ([
+    RBRC_RUEN,              // )]
 };
 
 typedef enum {
@@ -212,17 +215,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // -------------
         // SHIFTED CHARS
         // -------------
-        case USER_QUEST: {                                  // ?!  Учитывает язык раскладки
+        case QUEST_RUEN: {                                  // ? Учитывает язык раскладки
             clear_active_mods();
 
-            if (shifted) {
-                send_exclamation();                         // !
-            } else {
+            //if (shifted) {
+              //send_exclamation();                         // !
+            //} else {
                 if (current_lang == LANG_STATE_EN)
                     send_quest();                           // ?
                 else
                     send_ru_quest();                        // ?
-            }
+            //}
 
             restore_held_mods(mod_state);
             return false;
@@ -314,6 +317,38 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             send_en_symbol(send_right_curly_bracket);       // }
             restore_held_mods(mod_state);
             return false;
+
+        case LBRC_RUEN: {                                  // ([ Учитывает язык раскладки
+            clear_active_mods();
+
+            if (shifted) {
+                clear_active_mods();
+                send_en_symbol(send_left_square_bracket);
+                restore_held_mods(mod_state);
+            } else {
+                register_mods(MOD_LSFT);
+                tap_code(KC_9);
+                unregister_mods(MOD_LSFT);
+            }
+
+            restore_held_mods(mod_state);
+            return false;
+        }
+
+        case RBRC_RUEN: {                                  // )] Учитывает язык раскладки
+            clear_active_mods();
+
+            if (shifted) {
+                send_en_symbol(send_right_square_bracket);
+            } else {
+                register_mods(MOD_LSFT);
+                tap_code(KC_0);
+                unregister_mods(MOD_LSFT);
+            }
+
+            restore_held_mods(mod_state);
+            return false;
+        }
 
 
         // ------

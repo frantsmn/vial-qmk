@@ -96,9 +96,9 @@
             "shortName": "&"
         },
         {
-            "name": "USER_QUEST",
-            "title": "? !",
-            "shortName": "? !"
+            "name": "QUEST_RUEN",
+            "title": "?",
+            "shortName": "?"
         },
         {
             "name": "USER_QUOTES",
@@ -152,10 +152,23 @@
             "title": "=>",
             "shortName": "=>"
         },
+
         {
             "name": "DOT_COMMA_RUEN",
             "title": "., RUEN",
             "shortName": ".,"
+        },
+
+        {
+            "name": "LBRC_RUEN",
+            "title": "([ RUEN",
+            "shortName": "(["
+        },
+
+        {
+            "name": "RBRC_RUEN",
+            "title": ")] RUEN",
+            "shortName": ")]"
         }
     ]
 }
