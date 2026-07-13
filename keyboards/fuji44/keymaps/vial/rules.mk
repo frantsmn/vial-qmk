@@ -7,4 +7,4 @@ KEY_OVERRIDE_ENABLE = no
 REPEAT_KEY_ENABLE = no
 LAYER_LOCK_ENABLE = no
 
-SRC += symbols.c
+SRC += symbols.c auto_swap_key.c

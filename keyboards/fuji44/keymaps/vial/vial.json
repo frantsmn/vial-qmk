@@ -175,6 +175,16 @@
             "name": "LAYER_5_2S",
             "title": "Layer 5 for 2 seconds",
             "shortName": "L5 2s"
+        },
+        {
+            "name": "GRAVE_RUEN",
+            "title": "` RUEN",
+            "shortName": "`"
+        },
+        {
+            "name": "AUTO_SWAP_M_RUEN",
+            "title": "m/ь/ъ; hold: ъ",
+            "shortName": "ь/ъ"
         }
     ]
 }

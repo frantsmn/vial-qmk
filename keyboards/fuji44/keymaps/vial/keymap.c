@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "auto_swap_key.h"
 #include "symbols.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {};
@@ -47,6 +48,9 @@ enum my_keycodes {
     LBRC_RUEN,              // ([
     RBRC_RUEN,              // )]
     LAYER_5_3S,             // Layer 5 for 3 seconds
+    GRAVE_RUEN,             // `
+
+    AUTO_SWAP_M_RUEN,       // m/ь; hold on RU => ъ
 };
 
 #define TEMP_LAYER_5 5
@@ -58,6 +62,11 @@ typedef enum {
 } lang_state_t;
 
 lang_state_t current_lang = LANG_STATE_EN;
+
+static auto_swap_key_t auto_swap_keys[] = {
+    AUTO_SWAP_KEY_WITH_TIMEOUT(AUTO_SWAP_M_RUEN, KC_M, KC_RBRC, 200),
+};
+#define AUTO_SWAP_KEYS_COUNT ARRAY_SIZE(auto_swap_keys)
 
 static uint16_t temp_layer_5_timer = 0;
 static bool temp_layer_5_active = false;
@@ -173,6 +182,10 @@ static void deactivate_temp_layer_5(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!process_auto_swap_keys(keycode, record, current_lang == LANG_STATE_RU, auto_swap_keys, AUTO_SWAP_KEYS_COUNT)) {
+        return false;
+    }
+
     if (!record->event.pressed) {
         return true;
     }
@@ -236,6 +249,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case ANGLE_GT_EN:                               // >
             send_en_symbol(send_greater);
             return false;
+        case GRAVE_RUEN: {                                // `
+            clear_active_mods();
+            send_en_symbol(send_grave);
+            restore_held_mods(mod_state);
+            return false;
+        }
 
 
         // -------------
@@ -419,6 +438,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 void matrix_scan_user(void) {
+    auto_swap_key_task(auto_swap_keys, AUTO_SWAP_KEYS_COUNT);
+
     if (!temp_layer_5_active) {
         return;
     }

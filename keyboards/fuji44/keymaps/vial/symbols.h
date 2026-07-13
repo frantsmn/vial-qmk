@@ -21,6 +21,7 @@ void send_dot(void);
 void send_ru_dot(void);
 void send_comma(void);
 void send_ru_comma(void);
+void send_grave(void);
 
 void send_less(void);
 void send_greater(void);

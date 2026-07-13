@@ -109,6 +109,10 @@ void send_ru_comma(void) {
     unregister_mods(MOD_LSFT);
 }
 
+void send_grave(void) {
+    tap_code(KC_GRV);
+}
+
 void send_less(void) {
     register_mods(MOD_LSFT);
     tap_code(KC_COMMA);
