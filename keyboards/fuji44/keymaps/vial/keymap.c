@@ -46,7 +46,11 @@ enum my_keycodes {
 
     LBRC_RUEN,              // ([
     RBRC_RUEN,              // )]
+    LAYER_5_3S,             // Layer 5 for 3 seconds
 };
+
+#define TEMP_LAYER_5 5
+#define TEMP_LAYER_5_TIMEOUT 2000
 
 typedef enum {
     LANG_STATE_EN = 0,
@@ -54,6 +58,9 @@ typedef enum {
 } lang_state_t;
 
 lang_state_t current_lang = LANG_STATE_EN;
+
+static uint16_t temp_layer_5_timer = 0;
+static bool temp_layer_5_active = false;
 
 typedef struct {
     uint8_t mods;
@@ -153,9 +160,25 @@ void send_en_symbol(void (*send)(void)) {
 //     return;
 // }
 
+static void activate_temp_layer_5(void) {
+    layer_clear();
+    layer_on(TEMP_LAYER_5);
+    temp_layer_5_timer = timer_read();
+    temp_layer_5_active = true;
+}
+
+static void deactivate_temp_layer_5(void) {
+    layer_clear();
+    temp_layer_5_active = false;
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!record->event.pressed) {
         return true;
+    }
+
+    if (temp_layer_5_active && layer_state_is(TEMP_LAYER_5)) {
+        temp_layer_5_timer = timer_read();
     }
 
     const mod_state_t mod_state = save_mod_state();
@@ -174,6 +197,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case LANG_RU:                                   // RU
             switch_to_ru();
+            return false;
+        case LAYER_5_3S:                                // Layer 5 for 3 seconds
+            activate_temp_layer_5();
             return false;
 
 
@@ -390,6 +416,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     return true;
+}
+
+void matrix_scan_user(void) {
+    if (!temp_layer_5_active) {
+        return;
+    }
+
+    if (!layer_state_is(TEMP_LAYER_5)) {
+        temp_layer_5_active = false;
+        return;
+    }
+
+    if (timer_elapsed(temp_layer_5_timer) >= TEMP_LAYER_5_TIMEOUT) {
+        deactivate_temp_layer_5();
+    }
 }
 
 // TAPPING_TERM для LSFT_T(KC_A) и RSFT_T(KC_SCLN) = 145 ms
