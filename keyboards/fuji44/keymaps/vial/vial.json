@@ -185,6 +185,11 @@
             "name": "AUTO_SWAP_M_RUEN",
             "title": "m/ь/ъ; hold: ъ",
             "shortName": "ь/ъ"
+        },
+        {
+            "name": "ALT_TAB_MODE",
+            "title": "Windows Alt-Tab mode",
+            "shortName": "Alt-Tab"
         }
     ]
 }

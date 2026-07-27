@@ -1,8 +1,13 @@
 #include QMK_KEYBOARD_H
 #include "auto_swap_key.h"
 #include "symbols.h"
+#include "windows_alt_tab.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {};
+
+#define WINDOWS_ALT_TAB_LAYER 6
+#define WINDOWS_ALT_TAB_TIMEOUT_MS 3000
+#define WINDOWS_ALT_TAB_INITIAL_STEP_DELAY_MS 40
 
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -51,6 +56,7 @@ enum my_keycodes {
     GRAVE_RUEN,             // `
 
     AUTO_SWAP_M_RUEN,       // m/ь; hold on RU => ъ
+    ALT_TAB_MODE,           // Windows Alt+Tab mode
 };
 
 #define TEMP_LAYER_5 5
@@ -70,6 +76,15 @@ static auto_swap_key_t auto_swap_keys[] = {
 
 static uint16_t temp_layer_5_timer = 0;
 static bool temp_layer_5_active = false;
+
+void keyboard_post_init_user(void) {
+    windows_alt_tab_init(
+        ALT_TAB_MODE,
+        WINDOWS_ALT_TAB_LAYER,
+        WINDOWS_ALT_TAB_TIMEOUT_MS,
+        WINDOWS_ALT_TAB_INITIAL_STEP_DELAY_MS
+    );
+}
 
 typedef struct {
     uint8_t mods;
@@ -182,6 +197,10 @@ static void deactivate_temp_layer_5(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!windows_alt_tab_process_record(keycode, record)) {
+        return false;
+    }
+
     if (!process_auto_swap_keys(keycode, record, current_lang == LANG_STATE_RU, auto_swap_keys, AUTO_SWAP_KEYS_COUNT)) {
         return false;
     }
@@ -435,6 +454,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     return true;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    return windows_alt_tab_layer_state_set(state);
+}
+
+void housekeeping_task_user(void) {
+    // Housekeeping runs after QMK has processed this loop's key events.
+    // Navigation can therefore refresh the timer before timeout is checked.
+    windows_alt_tab_task();
 }
 
 void matrix_scan_user(void) {
