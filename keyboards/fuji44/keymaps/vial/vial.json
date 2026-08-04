@@ -158,6 +158,11 @@
             "title": "., RUEN",
             "shortName": ".,"
         },
+        {
+            "name": "SLASH_BSLS_RUEN",
+            "title": "/\\ EN | ., RU",
+            "shortName": "/\\"
+        },
 
         {
             "name": "LBRC_RUEN",

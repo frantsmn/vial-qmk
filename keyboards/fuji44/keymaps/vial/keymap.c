@@ -49,6 +49,7 @@ enum my_keycodes {
     ARROW_FN,               // =>
 
     DOT_COMMA_RUEN,         // .,
+    SLASH_BSLS_RUEN,        // /\\ on EN; ., on RU
 
     LBRC_RUEN,              // ([
     RBRC_RUEN,              // )]
@@ -282,14 +283,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case QUEST_RUEN: {                                  // ? Учитывает язык раскладки
             clear_active_mods();
 
-            //if (shifted) {
-              //send_exclamation();                         // !
-            //} else {
-                if (current_lang == LANG_STATE_EN)
-                    send_quest();                           // ?
-                else
-                    send_ru_quest();                        // ?
-            //}
+            if (current_lang == LANG_STATE_EN)
+                send_quest();                           // ?
+            else
+                send_ru_quest();                        // ?
 
             restore_held_mods(mod_state);
             return false;
@@ -356,6 +353,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             send_en_symbol(send_semicolon);
             restore_held_mods(mod_state);
             return false;
+
+        case SLASH_BSLS_RUEN: {                            // /\ on EN ., on RU
+            const bool shift_only =
+                shifted && (effective_mods & (MOD_MASK_CTRL | MOD_MASK_ALT | MOD_MASK_GUI)) == 0;
+
+            if (current_lang == LANG_STATE_EN && shift_only) {
+                clear_active_mods();
+                tap_code(KC_BSLS);
+                restore_held_mods(mod_state);
+                return false;
+            }
+
+            tap_code(KC_SLSH);
+            return false;
+        }
 
 
         // ------
