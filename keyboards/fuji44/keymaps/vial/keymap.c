@@ -1,6 +1,7 @@
 #include QMK_KEYBOARD_H
-#include "auto_swap_key.h"
 #include "symbols.h"
+#include "auto_swap_key.h"
+#include "language_state.h"
 #include "windows_alt_tab.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {};
@@ -9,9 +10,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {};
 #define WINDOWS_ALT_TAB_TIMEOUT_MS 3000
 #define WINDOWS_ALT_TAB_INITIAL_STEP_DELAY_MS 40
 
+// QMK callback. Удалять нельзя. Улучшает отзывчивость при наборе символа с зажатым правым Shift
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case SFT_T(KC_QUOTE):
+        case RSFT_T(KC_QUOTE):
             return true;
         default:
             return false;
@@ -69,6 +72,10 @@ typedef enum {
 } lang_state_t;
 
 lang_state_t current_lang = LANG_STATE_EN;
+
+bool is_russian_layout_active(void) {
+    return current_lang == LANG_STATE_RU;
+}
 
 static auto_swap_key_t auto_swap_keys[] = {
     AUTO_SWAP_KEY_WITH_TIMEOUT(AUTO_SWAP_M_RUEN, KC_M, KC_RBRC, 200),
@@ -444,25 +451,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             send_en_symbol(send_fat_arrow);
             restore_held_mods(mod_state);
             return false;
-
-
-        // -------
-        // RUSSIAN
-        // -------
-        case KC_M: {                                        // Shift + "ь" => "ъ" только для RU
-            if (current_lang == LANG_STATE_EN) {
-                return true;                                // en игнорируем
-            }
-
-            if (!shifted) {
-                return true;                                // без shit будет напечатана "ь"
-            }
-
-            clear_active_mods();
-            send_right_square_bracket();                    // с shit будет напечатана "ъ"
-            restore_held_mods(mod_state);
-            return false;
-        }
     }
 
     return true;

@@ -1,5 +1,9 @@
 #include "auto_swap_key.h"
 
+#ifdef CAPS_WORD_ENABLE
+#    include "caps_word.h"
+#endif
+
 static uint8_t get_effective_mods(void) {
     uint8_t mods = get_mods();
 
@@ -47,13 +51,26 @@ bool process_auto_swap_keys(uint16_t keycode, keyrecord_t *record, bool delay_ho
         key->hold_sent = false;
         key->timer = timer_read();
         key->mods = get_effective_mods();
+        key->caps_word_mods = 0;
+
+#ifdef CAPS_WORD_ENABLE
+        if (is_caps_word_on()) {
+            key->mods |= MOD_BIT(KC_LSFT);
+            key->caps_word_mods = MOD_BIT(KC_LSFT) & ~get_mods();
+#    if CAPS_WORD_IDLE_TIMEOUT > 0
+            caps_word_reset_idle_timer();
+#    endif
+        }
+#endif
 
         if (!key->delayed) {
+            register_mods(key->caps_word_mods);
             register_code16(key->tap);
         }
     } else if (key->active) {
         if (!key->delayed) {
             unregister_code16(key->tap);
+            unregister_mods(key->caps_word_mods);
         } else if (!key->hold_sent) {
             if (timer_elapsed(key->timer) >= key->timeout) {
                 send_hold(key);

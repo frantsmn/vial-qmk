@@ -14,6 +14,7 @@ typedef struct {
 
     uint16_t timer;
     uint8_t mods;
+    uint8_t caps_word_mods;
     bool active;
     bool delayed;
     bool hold_sent;
