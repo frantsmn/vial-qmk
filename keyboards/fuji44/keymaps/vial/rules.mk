@@ -8,4 +8,4 @@ REPEAT_KEY_ENABLE = no
 LAYER_LOCK_ENABLE = no
 CAPS_WORD_ENABLE = yes
 
-SRC += symbols.c auto_swap_key.c caps_word_russian.c windows_alt_tab.c
+SRC += symbols.c auto_swap_key.c caps_word_russian.c custom_symbols.c language_state.c temporary_layer.c windows_alt_tab.c
