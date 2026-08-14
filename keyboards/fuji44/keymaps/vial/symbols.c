@@ -1,11 +1,5 @@
 #include "symbols.h"
 
-void send_exclamation(void) {
-    register_mods(MOD_LSFT);
-    tap_code(KC_1);
-    unregister_mods(MOD_LSFT);
-}
-
 void send_at(void) {
     register_mods(MOD_LSFT);
     tap_code(KC_2);
@@ -142,20 +136,6 @@ void send_left_curly_bracket(void) {
 void send_right_curly_bracket(void) {
     register_mods(MOD_LSFT);
     tap_code(KC_RBRC);
-    unregister_mods(MOD_LSFT);
-}
-
-// Одинаково на RU и EN
-void send_asterisk(void) {
-    register_mods(MOD_LSFT);
-    tap_code(KC_8);
-    unregister_mods(MOD_LSFT);
-}
-
-// Одинаково на RU и EN
-void send_percent(void) {
-    register_mods(MOD_LSFT);
-    tap_code(KC_5);
     unregister_mods(MOD_LSFT);
 }
 

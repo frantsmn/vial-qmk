@@ -1,7 +1,6 @@
 #pragma once
 #include QMK_KEYBOARD_H
 
-void send_exclamation(void);
 void send_at(void);
 void send_hash(void);
 void send_dollar(void);
@@ -31,8 +30,5 @@ void send_right_square_bracket(void);
 
 void send_left_curly_bracket(void);
 void send_right_curly_bracket(void);
-
-void send_asterisk(void);
-void send_percent(void);
 
 void send_fat_arrow(void);

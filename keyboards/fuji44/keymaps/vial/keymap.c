@@ -56,7 +56,7 @@ enum my_keycodes {
 
     LBRC_RUEN,              // ([
     RBRC_RUEN,              // )]
-    LAYER_5_3S,             // Layer 5 for 3 seconds
+    LAYER_5_TIMEOUT,        // Layer 5 for N seconds
     GRAVE_RUEN,             // `
 
     AUTO_SWAP_M_RUEN,       // m/ь; hold on RU => ъ
@@ -175,23 +175,6 @@ void send_en_symbol(void (*send)(void)) {
     return;
 }
 
-// void send_ru_symbol(void (*send)(void)) {
-//     lang_state_t prev = current_lang;
-//
-//     if (current_lang != LANG_STATE_RU) {
-//         switch_to_ru();
-//         wait_ms(10);
-//     }
-//
-//     send();
-//
-//     if (prev != LANG_STATE_RU) {
-//         wait_ms(10);
-//         switch_to_en();
-//     }
-//     return;
-// }
-
 static void activate_temp_layer_5(void) {
     layer_clear();
     layer_on(TEMP_LAYER_5);
@@ -238,7 +221,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case LANG_RU:                                   // RU
             switch_to_ru();
             return false;
-        case LAYER_5_3S:                                // Layer 5 for 3 seconds
+        case LAYER_5_TIMEOUT:                           // Layer 5 for N seconds
             activate_temp_layer_5();
             return false;
 
@@ -277,9 +260,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             send_en_symbol(send_greater);
             return false;
         case GRAVE_RUEN: {                                // `
-            clear_active_mods();
             send_en_symbol(send_grave);
-            restore_held_mods(mod_state);
             return false;
         }
 
@@ -405,9 +386,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             clear_active_mods();
 
             if (shifted) {
-                clear_active_mods();
                 send_en_symbol(send_left_square_bracket);
-                restore_held_mods(mod_state);
             } else {
                 register_mods(MOD_LSFT);
                 tap_code(KC_9);
@@ -482,14 +461,3 @@ void matrix_scan_user(void) {
         deactivate_temp_layer_5();
     }
 }
-
-// TAPPING_TERM для LSFT_T(KC_A) и RSFT_T(KC_SCLN) = 145 ms
-// uint16_t get_tapping_term_user(uint16_t keycode, keyrecord_t *record) {
-//     switch (keycode) {
-//         case LSFT_T(KC_A):
-//         case RSFT_T(KC_SCLN):
-//             return 145;
-//         default:
-//             return TAPPING_TERM;
-//     }
-// }
