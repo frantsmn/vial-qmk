@@ -195,11 +195,6 @@
             "name": "ALT_TAB_MODE",
             "title": "Windows Alt-Tab mode",
             "shortName": "Alt-Tab"
-        },
-        {
-            "name": "AUTO_SWAP_T_RUEN",
-            "title": "t/е; hold: ё",
-            "shortName": "T е|ё"
         }
     ]
 }

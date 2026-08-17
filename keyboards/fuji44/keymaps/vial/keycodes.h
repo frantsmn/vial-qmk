@@ -42,5 +42,4 @@ enum custom_keycodes {
 
     AUTO_SWAP_M_RUEN,
     ALT_TAB_MODE,
-    AUTO_SWAP_T_RUEN,
 };

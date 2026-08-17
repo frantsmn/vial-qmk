@@ -30,7 +30,6 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 
 static auto_swap_key_t auto_swap_keys[] = {
     AUTO_SWAP_KEY_WITH_TIMEOUT(AUTO_SWAP_M_RUEN, KC_M, KC_RBRC, 200),
-    AUTO_SWAP_KEY_WITH_TIMEOUT(AUTO_SWAP_T_RUEN, KC_T, KC_GRAVE, 200),
 };
 #define AUTO_SWAP_KEYS_COUNT ARRAY_SIZE(auto_swap_keys)
 
