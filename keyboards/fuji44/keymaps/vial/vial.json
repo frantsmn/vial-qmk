@@ -177,9 +177,9 @@
         },
 
         {
-            "name": "LAYER_5_TIMEOUT",
-            "title": "Layer 5 for N seconds",
-            "shortName": "L5 T"
+            "name": "NUM_LAYER_5_TIMEOUT",
+            "title": "Num layer 5 timeout for 2 seconds",
+            "shortName": "L5 2s"
         },
         {
             "name": "GRAVE_RUEN",
@@ -188,13 +188,18 @@
         },
         {
             "name": "AUTO_SWAP_M_RUEN",
-            "title": "m/ь/ъ; hold: ъ",
-            "shortName": "ь/ъ"
+            "title": "m/ь; hold: ъ",
+            "shortName": "M ь|ъ"
         },
         {
             "name": "ALT_TAB_MODE",
             "title": "Windows Alt-Tab mode",
             "shortName": "Alt-Tab"
+        },
+        {
+            "name": "AUTO_SWAP_T_RUEN",
+            "title": "t/е; hold: ё",
+            "shortName": "T е|ё"
         }
     ]
 }

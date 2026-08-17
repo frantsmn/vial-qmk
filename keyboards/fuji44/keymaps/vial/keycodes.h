@@ -37,9 +37,10 @@ enum custom_keycodes {
 
     LBRC_RUEN,
     RBRC_RUEN,
-    LAYER_5_TIMEOUT,
+    NUM_LAYER_5_TIMEOUT,
     GRAVE_RUEN,
 
     AUTO_SWAP_M_RUEN,
     ALT_TAB_MODE,
+    AUTO_SWAP_T_RUEN,
 };

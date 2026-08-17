@@ -37,8 +37,13 @@ static auto_swap_key_t *find_key(uint16_t keycode, auto_swap_key_t *keys, uint8_
     return NULL;
 }
 
-bool process_auto_swap_keys(uint16_t keycode, keyrecord_t *record, bool delay_hold,
-                            auto_swap_key_t *keys, uint8_t key_count) {
+bool process_auto_swap_keys(
+    uint16_t keycode,
+    keyrecord_t *record,
+    bool delay_hold,
+    auto_swap_key_t *keys,
+    uint8_t key_count
+) {
     auto_swap_key_t *key = find_key(keycode, keys, key_count);
 
     if (key == NULL) {

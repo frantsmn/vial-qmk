@@ -12,10 +12,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {};
 #define WINDOWS_ALT_TAB_TIMEOUT_MS 3000
 #define WINDOWS_ALT_TAB_INITIAL_STEP_DELAY_MS 40
 
-// Слой с цифрами (#5)
-#define TEMPORARY_LAYER_5 5
-// Таймаут для циферного слоя (#5)
-#define TEMPORARY_LAYER_5_TIMEOUT_MS 2000
+// Слой с цифрами (сейчас #5)
+#define NUM_LAYER 5
+// Таймаут для слоя с цифрами
+#define NUM_LAYER_TIMEOUT_MS 2000
 
 // QMK callback. Нужен для быстрого срабатывания правого Shift.
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
@@ -30,8 +30,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 
 static auto_swap_key_t auto_swap_keys[] = {
     AUTO_SWAP_KEY_WITH_TIMEOUT(AUTO_SWAP_M_RUEN, KC_M, KC_RBRC, 200),
-     // мб делать свап без кастомных клавиш на базе обычных (?)
-     // (риск без прошивки клавиатуры не вернуть оригинальное поведение клавиши ч-з vial)
+    AUTO_SWAP_KEY_WITH_TIMEOUT(AUTO_SWAP_T_RUEN, KC_T, KC_GRAVE, 200),
 };
 #define AUTO_SWAP_KEYS_COUNT ARRAY_SIZE(auto_swap_keys)
 
@@ -69,8 +68,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case LANG_RU:
             switch_to_ru();
             return false;
-        case LAYER_5_TIMEOUT:
-            temporary_layer_activate(TEMPORARY_LAYER_5, TEMPORARY_LAYER_5_TIMEOUT_MS);
+        case NUM_LAYER_5_TIMEOUT:
+            temporary_layer_activate(NUM_LAYER, NUM_LAYER_TIMEOUT_MS);
             return false;
     }
 
