@@ -40,6 +40,6 @@ enum custom_keycodes {
     NUM_LAYER_5_TIMEOUT,
     GRAVE_RUEN,
 
-    AUTO_SWAP_M_RUEN,
+    MINUS_PLUS,
     ALT_TAB_MODE,
 };

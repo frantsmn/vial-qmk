@@ -231,6 +231,14 @@ bool process_custom_symbols(uint16_t keycode) {
             }
             return true;
 
+        case MINUS_PLUS:
+            if (shifted) {
+                tap_code16(KC_EQUAL);
+            } else {
+                tap_code16(KC_MINUS);
+            }
+            return true;
+
         case ARROW_FN:
             clear_active_mods();
             send_en_symbol(send_fat_arrow);

@@ -1,5 +1,4 @@
 #include QMK_KEYBOARD_H
-#include "auto_swap_key.h"
 #include "custom_symbols.h"
 #include "keycodes.h"
 #include "language_state.h"
@@ -28,11 +27,6 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-static auto_swap_key_t auto_swap_keys[] = {
-    AUTO_SWAP_KEY_WITH_TIMEOUT(AUTO_SWAP_M_RUEN, KC_M, KC_RBRC, 200),
-};
-#define AUTO_SWAP_KEYS_COUNT ARRAY_SIZE(auto_swap_keys)
-
 void keyboard_post_init_user(void) {
     windows_alt_tab_init(
         ALT_TAB_MODE,
@@ -44,10 +38,6 @@ void keyboard_post_init_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!windows_alt_tab_process_record(keycode, record)) {
-        return false;
-    }
-
-    if (!process_auto_swap_keys(keycode, record, is_russian_layout_active(), auto_swap_keys, AUTO_SWAP_KEYS_COUNT)) {
         return false;
     }
 
@@ -85,6 +75,5 @@ void housekeeping_task_user(void) {
 }
 
 void matrix_scan_user(void) {
-    auto_swap_key_task(auto_swap_keys, AUTO_SWAP_KEYS_COUNT);
     temporary_layer_task();
 }

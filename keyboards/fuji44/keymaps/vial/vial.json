@@ -187,9 +187,9 @@
             "shortName": "`"
         },
         {
-            "name": "AUTO_SWAP_M_RUEN",
-            "title": "m/ь; hold: ъ",
-            "shortName": "M ь|ъ"
+            "name": "MINUS_PLUS",
+            "title": "-|+",
+            "shortName": "-|+"
         },
         {
             "name": "ALT_TAB_MODE",
