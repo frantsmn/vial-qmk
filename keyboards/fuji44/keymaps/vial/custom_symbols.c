@@ -245,6 +245,16 @@ bool process_custom_symbols(uint16_t keycode) {
             restore_held_mods(mod_state);
             return true;
 
+        case KC_COMMA_EQ:
+            if (!is_russian_layout_active() && shifted) {
+                clear_active_mods();
+                tap_code(KC_EQUAL);
+                restore_held_mods(mod_state);
+            } else {
+                tap_code16(KC_COMMA);
+            }
+            return true;
+
         default:
             return false;
     }

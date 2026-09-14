@@ -42,4 +42,5 @@ enum custom_keycodes {
 
     MINUS_PLUS,
     ALT_TAB_MODE,
+    KC_COMMA_EQ,
 };

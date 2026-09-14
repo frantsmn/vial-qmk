@@ -195,6 +195,11 @@
             "name": "ALT_TAB_MODE",
             "title": "Windows Alt-Tab mode",
             "shortName": "Alt-Tab"
+        },
+        {
+            "name": "KC_COMMA_EQ",
+            "title": ", = EN | б RU",
+            "shortName": ", ="
         }
     ]
 }
