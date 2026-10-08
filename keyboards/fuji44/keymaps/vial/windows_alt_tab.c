@@ -29,11 +29,11 @@ static void activate(void) {
     add_weak_mods(MOD_BIT_LALT);
     send_keyboard_report();
 
+    tap_code(KC_TAB);
     // Opening Alt+Tab selects the next window. Shift+Tab returns selection to
     // the currently focused window while leaving the switcher open.
-    tap_code(KC_TAB);
-    wait_ms(switcher.initial_step_delay_ms);
-    tap_code16(LSFT(KC_TAB));
+    // wait_ms(switcher.initial_step_delay_ms);
+    // tap_code16(LSFT(KC_TAB));
 
     switcher.activity_timer = timer_read32();
 }
