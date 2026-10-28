@@ -156,24 +156,24 @@
         {
             "name": "DOT_COMMA_RUEN",
             "title": "., RUEN",
-            "shortName": ".,"
+            "shortName": ". ,"
         },
         {
             "name": "SLASH_BSLS_RUEN",
             "title": "/\\ EN | ., RU",
-            "shortName": "/\\"
+            "shortName": "/ \\"
         },
 
         {
             "name": "LBRC_RUEN",
             "title": "([ RUEN",
-            "shortName": "(["
+            "shortName": "( ["
         },
 
         {
             "name": "RBRC_RUEN",
             "title": ")] RUEN",
-            "shortName": ")]"
+            "shortName": ") ]"
         },
 
         {
@@ -189,7 +189,7 @@
         {
             "name": "MINUS_PLUS",
             "title": "-|+",
-            "shortName": "-|+"
+            "shortName": "- +"
         },
         {
             "name": "ALT_TAB_MODE",
@@ -200,6 +200,42 @@
             "name": "KC_COMMA_EQ",
             "title": ", = EN | б RU",
             "shortName": ", ="
+        },
+        {
+            "name": "YO_RUEN",
+            "title": "Ё/ё RU",
+            "shortName": "Ё/ё"
+        },
+        {
+            "name": "HARD_SIGN_RUEN",
+            "title": "Ъ/ъ RU",
+            "shortName": "Ъ/ъ"
+        },
+        {
+            "name": "EXLM_PIPE_RUEN",
+            "title": "! | EN",
+            "shortName": "! |"
+        },
+        {
+            "name": "QUEST_AMP_RUEN",
+            "title": "? & EN",
+            "shortName": "? &"
+        },
+
+        {
+            "name": "CODE_COML_OR_TRNS",
+            "title": "Comment line [Ctrl+/ | ▽]",
+            "shortName": "Code1"
+        },
+        {
+            "name": "CODE_COMB_OR_TRNS",
+            "title": "Comment block [Ctrl+Shift+/ | ▽]",
+            "shortName": "Code2"
+        },
+        {
+            "name": "CODE_COPYP_OR_TRNS",
+            "title": "Copy path [Meh+C | ▽]",
+            "shortName": "Code3"
         }
     ]
 }

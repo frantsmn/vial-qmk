@@ -4,4 +4,4 @@
 #include <stdint.h>
 
 // Returns true when the keycode was handled.
-bool process_custom_symbols(uint16_t keycode);
+bool process_custom_symbols(uint16_t keycode, keyrecord_t *record);

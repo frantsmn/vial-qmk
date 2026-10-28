@@ -6,6 +6,12 @@ void send_at(void) {
     unregister_mods(MOD_LSFT);
 }
 
+void send_exclaim(void) {
+    register_mods(MOD_LSFT);
+    tap_code(KC_1);
+    unregister_mods(MOD_LSFT);
+}
+
 void send_hash(void) {
     register_mods(MOD_LSFT);
     tap_code(KC_3);

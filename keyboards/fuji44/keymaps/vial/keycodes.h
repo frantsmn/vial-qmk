@@ -43,4 +43,13 @@ enum custom_keycodes {
     MINUS_PLUS,
     ALT_TAB_MODE,
     KC_COMMA_EQ,
+
+    YO_RUEN,
+    HARD_SIGN_RUEN,
+    EXLM_PIPE_RUEN,
+    QUEST_AMP_RUEN,
+
+    CODE_COML_OR_TRNS,
+    CODE_COMB_OR_TRNS,
+    CODE_COPYP_OR_TRNS,
 };

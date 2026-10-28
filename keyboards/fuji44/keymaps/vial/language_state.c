@@ -124,3 +124,25 @@ void send_en_symbol(void (*send)(void)) {
     /* One-shot модификаторы считаются использованными введённым символом. */
     restore_held_mods(mod_state);
 }
+
+void send_ru_symbol(void (*send)(void)) {
+    const mod_state_t mod_state = save_mod_state();
+    const bool restore_english = current_lang == LANG_STATE_EN;
+
+    clear_active_mods();
+
+    if (restore_english) {
+        switch_to_ru_unmodified();
+        wait_ms(LANGUAGE_SWITCH_DELAY_MS);
+    }
+
+    send();
+
+    if (restore_english) {
+        wait_ms(LANGUAGE_RESTORE_DELAY_MS);
+        switch_to_en_unmodified();
+    }
+
+    /* One-shot модификаторы считаются использованными введённым символом. */
+    restore_held_mods(mod_state);
+}

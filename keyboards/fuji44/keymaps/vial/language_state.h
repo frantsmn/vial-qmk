@@ -7,3 +7,4 @@ void switch_to_en(void);
 void switch_to_ru(void);
 void switch_lang(void);
 void send_en_symbol(void (*send)(void));
+void send_ru_symbol(void (*send)(void));

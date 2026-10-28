@@ -2,6 +2,7 @@
 #include QMK_KEYBOARD_H
 
 void send_at(void);
+void send_exclaim(void);
 void send_hash(void);
 void send_dollar(void);
 void send_caret(void);

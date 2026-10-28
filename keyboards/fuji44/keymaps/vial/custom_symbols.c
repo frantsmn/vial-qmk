@@ -49,7 +49,37 @@ static void restore_held_mods(mod_state_t state) {
     set_mods(state.mods);
 }
 
-bool process_custom_symbols(uint16_t keycode) {
+static uint16_t get_lower_layer_keycode(uint16_t keycode, keyrecord_t *record) {
+    const layer_state_t active_layers = layer_state | default_layer_state;
+    const int8_t highest_layer = get_highest_layer(active_layers);
+    bool current_layer_reached = false;
+
+    for (int8_t layer = highest_layer; layer >= 0; layer--) {
+        if ((active_layers & ((layer_state_t)1 << layer)) == 0) {
+            continue;
+        }
+
+        const uint16_t layer_keycode = keymap_key_to_keycode(layer, record->event.key);
+
+        if (!current_layer_reached) {
+            if (layer_keycode == keycode) {
+                current_layer_reached = true;
+            }
+
+            continue;
+        }
+
+        if (layer_keycode == KC_TRNS || layer_keycode == keycode) {
+            continue;
+        }
+
+        return layer_keycode;
+    }
+
+    return KC_NO;
+}
+
+bool process_custom_symbols(uint16_t keycode, keyrecord_t *record) {
     const mod_state_t mod_state = save_mod_state();
     const uint8_t effective_mods = get_effective_mods(mod_state);
     const bool shifted = (effective_mods & MOD_MASK_SHIFT) != 0;
@@ -94,6 +124,38 @@ bool process_custom_symbols(uint16_t keycode) {
                 send_en_symbol(send_grave);
             }
             restore_held_mods(mod_state);
+            return true;
+
+        case YO_RUEN:
+            if (shifted) {
+                send_ru_symbol(send_tilde);
+            } else {
+                send_ru_symbol(send_grave);
+            }
+            return true;
+
+        case HARD_SIGN_RUEN:
+            if (shifted) {
+                send_ru_symbol(send_right_curly_bracket);
+            } else {
+                send_ru_symbol(send_right_square_bracket);
+            }
+            return true;
+
+        case EXLM_PIPE_RUEN:
+            if (shifted) {
+                send_en_symbol(send_verbar);
+            } else {
+                send_en_symbol(send_exclaim);
+            }
+            return true;
+
+        case QUEST_AMP_RUEN:
+            if (shifted) {
+                send_en_symbol(send_amp);
+            } else {
+                send_en_symbol(send_quest);
+            }
             return true;
 
         case QUEST_RUEN:
@@ -252,6 +314,50 @@ bool process_custom_symbols(uint16_t keycode) {
                 restore_held_mods(mod_state);
             } else {
                 tap_code16(KC_COMMA);
+            }
+            return true;
+
+        // Transparent keys for coding
+
+        case CODE_COML_OR_TRNS: //
+            if (effective_mods != 0) {
+                const uint16_t lower_layer_keycode = get_lower_layer_keycode(keycode, record);
+
+                if (lower_layer_keycode == KC_NO) {
+                    return false;
+                }
+
+                tap_code16(lower_layer_keycode);
+            } else {
+                tap_code16(C(KC_SLASH));
+            }
+            return true;
+
+        case CODE_COMB_OR_TRNS:
+            if (effective_mods != 0) {
+                const uint16_t lower_layer_keycode = get_lower_layer_keycode(keycode, record);
+
+                if (lower_layer_keycode == KC_NO) {
+                    return false;
+                }
+
+                tap_code16(lower_layer_keycode);
+            } else {
+                tap_code16(C(S(KC_SLASH)));
+            }
+            return true;
+
+        case CODE_COPYP_OR_TRNS:
+            if (effective_mods != 0) {
+                const uint16_t lower_layer_keycode = get_lower_layer_keycode(keycode, record);
+
+                if (lower_layer_keycode == KC_NO) {
+                    return false;
+                }
+
+                tap_code16(lower_layer_keycode);
+            } else {
+                tap_code16(MEH(KC_C));
             }
             return true;
 
