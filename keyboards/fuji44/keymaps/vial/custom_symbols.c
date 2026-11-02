@@ -228,12 +228,12 @@ bool process_custom_symbols(uint16_t keycode, keyrecord_t *record) {
             const bool shift_only = shifted &&
                                     (effective_mods & (MOD_MASK_CTRL | MOD_MASK_ALT | MOD_MASK_GUI)) == 0;
 
-            if (!is_russian_layout_active() && shift_only) {
+            if (shift_only) {
                 clear_active_mods();
                 tap_code(KC_BSLS);
                 restore_held_mods(mod_state);
             } else {
-                tap_code(KC_SLSH);
+                send_en_symbol(send_ru_dot);
             }
             return true;
         }
@@ -307,14 +307,10 @@ bool process_custom_symbols(uint16_t keycode, keyrecord_t *record) {
             restore_held_mods(mod_state);
             return true;
 
-        case KC_COMMA_EQ:
-            if (!is_russian_layout_active() && shifted) {
-                clear_active_mods();
-                tap_code(KC_EQUAL);
-                restore_held_mods(mod_state);
-            } else {
-                tap_code16(KC_COMMA);
-            }
+        case TILDE_RUEN:
+            clear_active_mods();
+            send_en_symbol(send_tilde);
+            restore_held_mods(mod_state);
             return true;
 
         // Transparent keys for coding

@@ -197,9 +197,9 @@
             "shortName": "Alt-Tab"
         },
         {
-            "name": "KC_COMMA_EQ",
-            "title": ", = EN | б RU",
-            "shortName": ", ="
+            "name": "TILDE_RUEN",
+            "title": "~ RUEN",
+            "shortName": "~"
         },
         {
             "name": "YO_RUEN",

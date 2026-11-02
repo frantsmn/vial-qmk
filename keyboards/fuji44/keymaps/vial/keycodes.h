@@ -42,7 +42,7 @@ enum custom_keycodes {
 
     MINUS_PLUS,
     ALT_TAB_MODE,
-    KC_COMMA_EQ,
+    TILDE_RUEN,
 
     YO_RUEN,
     HARD_SIGN_RUEN,
