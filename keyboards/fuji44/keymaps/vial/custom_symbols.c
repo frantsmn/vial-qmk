@@ -158,14 +158,18 @@ bool process_custom_symbols(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
 
-        case QUEST_RUEN:
-            clear_active_mods();
-            if (is_russian_layout_active()) {
-                send_ru_quest();
+        case QUEST_EN:
+            if (shifted) {
+                send_exclaim();
             } else {
-                send_quest();
+                clear_active_mods();
+                if (is_russian_layout_active()) {
+                    send_ru_quest();
+                } else {
+                    send_quest();
+                }
+                restore_held_mods(mod_state);
             }
-            restore_held_mods(mod_state);
             return true;
 
         case USER_QUOTES:

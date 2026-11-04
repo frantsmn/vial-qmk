@@ -18,7 +18,7 @@ enum custom_keycodes {
     HASH_EN,
     DOLLAR_EN,
     AMP_EN,
-    QUEST_RUEN,
+    QUEST_EN,
     USER_QUOTES,
     SINGLE_QUOTE_EN,
     USER_COLON,
