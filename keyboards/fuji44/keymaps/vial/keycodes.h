@@ -56,9 +56,9 @@ enum custom_keycodes {
 
 // --- Custom
 
-    USER_CUS_1,              // Reserved
-    USER_CUS_2,              // Reserved
-    USER_CUS_3,              // Reserved
+    USER_CUS_1,             // Reserved
+    USER_CUS_2,             // Reserved
+    USER_CUS_3,             // Reserved
 
     YO_RU,                  // ё
     HARD_SIGN_RU,           // ъ
