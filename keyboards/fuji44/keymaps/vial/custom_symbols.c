@@ -103,20 +103,17 @@ bool process_custom_symbols(uint16_t keycode, keyrecord_t *record) {
         case VERBAR_EN:
             send_en_symbol(send_verbar);
             return true;
-        case DOT_EN:
-            send_en_symbol(send_dot);
-            return true;
         case COMMA_EN:
             send_en_symbol(send_comma);
             return true;
-        case ANGLE_LT_EN:
+        case LANGLE_EN:
             send_en_symbol(send_less);
             return true;
-        case ANGLE_GT_EN:
+        case RANGLE_EN:
             send_en_symbol(send_greater);
             return true;
 
-        case GRAVE_RUEN:
+        case GRAVE_EN:
             clear_active_mods();
             if (shifted) {
                 send_en_symbol(send_tilde);
@@ -126,7 +123,7 @@ bool process_custom_symbols(uint16_t keycode, keyrecord_t *record) {
             restore_held_mods(mod_state);
             return true;
 
-        case YO_RUEN:
+        case YO_RU:
             if (shifted) {
                 send_ru_symbol(send_tilde);
             } else {
@@ -134,27 +131,11 @@ bool process_custom_symbols(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
 
-        case HARD_SIGN_RUEN:
+        case HARD_SIGN_RU:
             if (shifted) {
                 send_ru_symbol(send_right_curly_bracket);
             } else {
                 send_ru_symbol(send_right_square_bracket);
-            }
-            return true;
-
-        case EXLM_PIPE_RUEN:
-            if (shifted) {
-                send_en_symbol(send_verbar);
-            } else {
-                send_en_symbol(send_exclaim);
-            }
-            return true;
-
-        case QUEST_AMP_RUEN:
-            if (shifted) {
-                send_en_symbol(send_amp);
-            } else {
-                send_en_symbol(send_quest);
             }
             return true;
 
@@ -172,7 +153,7 @@ bool process_custom_symbols(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
 
-        case USER_QUOTES:
+        case QUOTES_EN:
             clear_active_mods();
             if (shifted) {
                 send_en_symbol(send_single_quote);
@@ -190,7 +171,7 @@ bool process_custom_symbols(uint16_t keycode, keyrecord_t *record) {
             restore_held_mods(mod_state);
             return true;
 
-        case USER_COLON:
+        case COLONS_EN:
             clear_active_mods();
             if (shifted) {
                 if (is_russian_layout_active()) {
@@ -206,7 +187,7 @@ bool process_custom_symbols(uint16_t keycode, keyrecord_t *record) {
             restore_held_mods(mod_state);
             return true;
 
-        case DOT_COMMA_RUEN:
+        case DOT_COMMA_EN:
             clear_active_mods();
             if (shifted) {
                 if (is_russian_layout_active()) {
@@ -228,7 +209,7 @@ bool process_custom_symbols(uint16_t keycode, keyrecord_t *record) {
             restore_held_mods(mod_state);
             return true;
 
-        case SLASH_BSLS_RUEN: {
+        case SLASH_BSLS_EN: {
             const bool shift_only = shifted &&
                                     (effective_mods & (MOD_MASK_CTRL | MOD_MASK_ALT | MOD_MASK_GUI)) == 0;
 
@@ -263,7 +244,7 @@ bool process_custom_symbols(uint16_t keycode, keyrecord_t *record) {
             restore_held_mods(mod_state);
             return true;
 
-        case LBRC_RUEN:
+        case LBRC_EN:
             clear_active_mods();
             if (shifted) {
                 send_en_symbol(send_left_square_bracket);
@@ -275,7 +256,7 @@ bool process_custom_symbols(uint16_t keycode, keyrecord_t *record) {
             restore_held_mods(mod_state);
             return true;
 
-        case RBRC_RUEN:
+        case RBRC_EN:
             clear_active_mods();
             if (shifted) {
                 send_en_symbol(send_right_square_bracket);
@@ -285,16 +266,6 @@ bool process_custom_symbols(uint16_t keycode, keyrecord_t *record) {
                 unregister_mods(MOD_LSFT);
             }
             restore_held_mods(mod_state);
-            return true;
-
-        case MINUS_EQUAL:
-            if (shifted) {
-                clear_active_mods();
-                tap_code(KC_EQUAL);
-                restore_held_mods(mod_state);
-            } else {
-                tap_code16(KC_MINUS);
-            }
             return true;
 
         case MINUS_PLUS:
@@ -311,7 +282,7 @@ bool process_custom_symbols(uint16_t keycode, keyrecord_t *record) {
             restore_held_mods(mod_state);
             return true;
 
-        case TILDE_RUEN:
+        case TILDE_EN:
             clear_active_mods();
             send_en_symbol(send_tilde);
             restore_held_mods(mod_state);

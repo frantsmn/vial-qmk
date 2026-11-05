@@ -43,43 +43,60 @@
             "title": "Switch to RU (LCTL+2)",
             "shortName": "RU"
         },
+        {
+            "name": "ALT_TAB_MODE",
+            "title": "Windows Alt-Tab mode",
+            "shortName": "Alt-Tab"
+        },
+        {
+            "name": "NUM_LAYER_TIMEOUT",
+            "title": "Switch to NUM layer (2 sec timeout)",
+            "shortName": "NUM2s"
+        },
 
+        {
+            "name": "USER_FN_5",
+            "title": "Empty",
+            "shortName": ""
+        },
+        {
+            "name": "USER_FN_4",
+            "title": "Empty",
+            "shortName": ""
+        },
+        {
+            "name": "USER_FN_3",
+            "title": "Empty",
+            "shortName": ""
+        },
+        {
+            "name": "USER_FN_2",
+            "title": "Empty",
+            "shortName": ""
+        },
+        {
+            "name": "USER_FN_1",
+            "title": "Empty",
+            "shortName": ""
+        },
+
+
+
+        {
+            "name": "GRAVE_EN",
+            "title": "` RUEN",
+            "shortName": "`"
+        },
+        {
+            "name": "TILDE_EN",
+            "title": "~ EN",
+            "shortName": "~"
+        },
         {
             "name": "AT_EN",
             "title": "@ EN",
             "shortName": "@"
         },
-        {
-            "name": "CARET_EN",
-            "title": "^ EN",
-            "shortName": "^"
-        },
-        {
-            "name": "VERBAR_EN",
-            "title": "| EN",
-            "shortName": "|"
-        },
-        {
-            "name": "DOT_EN",
-            "title": ". EN",
-            "shortName": "."
-        },
-        {
-            "name": "COMMA_EN",
-            "title": ", EN",
-            "shortName": ","
-        },
-        {
-            "name": "ANGLE_LT_EN",
-            "title": "< EN",
-            "shortName": "<"
-        },
-        {
-            "name": "ANGLE_GT_EN",
-            "title": "> EN",
-            "shortName": ">"
-        },
-
         {
             "name": "HASH_EN",
             "title": "# EN",
@@ -91,17 +108,32 @@
             "shortName": "$"
         },
         {
+            "name": "CARET_EN",
+            "title": "^ EN",
+            "shortName": "^"
+        },
+        {
             "name": "AMP_EN",
             "title": "& EN",
             "shortName": "&"
         },
         {
-            "name": "QUEST_EN",
-            "title": "? ! EN",
-            "shortName": "? !"
+            "name": "VERBAR_EN",
+            "title": "| EN",
+            "shortName": "|"
         },
         {
-            "name": "USER_QUOTES",
+            "name": "DOT_COMMA_EN",
+            "title": ". , RUEN",
+            "shortName": ". ,"
+        },
+        {
+            "name": "COMMA_EN",
+            "title": ", EN",
+            "shortName": ","
+        },
+        {
+            "name": "QUOTES_EN",
             "title": "\" ' EN",
             "shortName": "\" '"
         },
@@ -111,7 +143,7 @@
             "shortName": "'"
         },
         {
-            "name": "USER_COLON",
+            "name": "COLONS_EN",
             "title": ": ;",
             "shortName": ": ;"
         },
@@ -120,7 +152,65 @@
             "title": "; EN",
             "shortName": ";"
         },
+        {
+            "name": "QUEST_EN",
+            "title": "? ! EN",
+            "shortName": "? !"
+        },
+        {
+            "name": "SLASH_BSLS_EN",
+            "title": "/\\ EN | ., RU",
+            "shortName": "/ \\"
+        },
 
+        {
+            "name": "USER_SYM_5",
+            "title": "Empty",
+            "shortName": ""
+        },
+        {
+            "name": "USER_SYM_4",
+            "title": "Empty",
+            "shortName": ""
+        },
+        {
+            "name": "USER_SYM_3",
+            "title": "Empty",
+            "shortName": ""
+        },
+        {
+            "name": "USER_SYM_2",
+            "title": "Empty",
+            "shortName": ""
+        },
+        {
+            "name": "USER_SYM_1",
+            "title": "Empty",
+            "shortName": ""
+        },
+
+
+
+        {
+            "name": "LANGLE_EN",
+            "title": "< EN",
+            "shortName": "<"
+        },
+        {
+            "name": "RANGLE_EN",
+            "title": "> EN",
+            "shortName": ">"
+        },
+        {
+            "name": "LBRC_EN",
+            "title": "( [ RUEN",
+            "shortName": "( ["
+        },
+        {
+            "name": "RBRC_EN",
+            "title": ") ] RUEN",
+            "shortName": ") ]"
+        },
         {
             "name": "LSBRC_EN",
             "title": "[ EN",
@@ -142,85 +232,62 @@
             "shortName": "}"
         },
 
+
+
         {
-            "name": "MINUS_EQUAL",
-            "title": "- =",
-            "shortName": "- ="
+            "name": "USER_CUS_1",
+            "title": "Empty",
+            "shortName": ""
+        },
+        {
+            "name": "USER_CUS_2",
+            "title": "Empty",
+            "shortName": ""
+        },
+        {
+            "name": "USER_CUS_3",
+            "title": "Empty",
+            "shortName": ""
+        },
+
+        {
+            "name": "YO_RU",
+            "title": "Ё ё RU",
+            "shortName": "Ё ё"
+        },
+        {
+            "name": "HARD_SIGN_RU",
+            "title": "Ъ ъ RU",
+            "shortName": "Ъ ъ"
         },
         {
             "name": "ARROW_FN",
             "title": "=>",
             "shortName": "=>"
         },
-
-        {
-            "name": "DOT_COMMA_RUEN",
-            "title": "., RUEN",
-            "shortName": ". ,"
-        },
-        {
-            "name": "SLASH_BSLS_RUEN",
-            "title": "/\\ EN | ., RU",
-            "shortName": "/ \\"
-        },
-
-        {
-            "name": "LBRC_RUEN",
-            "title": "([ RUEN",
-            "shortName": "( ["
-        },
-
-        {
-            "name": "RBRC_RUEN",
-            "title": ")] RUEN",
-            "shortName": ") ]"
-        },
-
-        {
-            "name": "NUM_LAYER_5_TIMEOUT",
-            "title": "Num layer 5 timeout for 2 seconds",
-            "shortName": "L5 2s"
-        },
-        {
-            "name": "GRAVE_RUEN",
-            "title": "` RUEN",
-            "shortName": "`"
-        },
         {
             "name": "MINUS_PLUS",
-            "title": "-|+",
+            "title": "- +",
             "shortName": "- +"
         },
+
         {
-            "name": "ALT_TAB_MODE",
-            "title": "Windows Alt-Tab mode",
-            "shortName": "Alt-Tab"
+            "name": "USER_CUS_8",
+            "title": "Empty",
+            "shortName": ""
         },
         {
-            "name": "TILDE_RUEN",
-            "title": "~ RUEN",
-            "shortName": "~"
+            "name": "USER_CUS_9",
+            "title": "Empty",
+            "shortName": ""
         },
         {
-            "name": "YO_RUEN",
-            "title": "Ё/ё RU",
-            "shortName": "Ё/ё"
+            "name": "USER_CUS_10",
+            "title": "Empty",
+            "shortName": ""
         },
-        {
-            "name": "HARD_SIGN_RUEN",
-            "title": "Ъ/ъ RU",
-            "shortName": "Ъ/ъ"
-        },
-        {
-            "name": "EXLM_PIPE_RUEN",
-            "title": "! | EN",
-            "shortName": "! |"
-        },
-        {
-            "name": "QUEST_AMP_RUEN",
-            "title": "? & EN",
-            "shortName": "? &"
-        },
+
+
 
         {
             "name": "CODE_COML_OR_TRNS",

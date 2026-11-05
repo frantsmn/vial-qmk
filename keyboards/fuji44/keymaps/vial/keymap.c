@@ -11,8 +11,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {};
 #define WINDOWS_ALT_TAB_TIMEOUT_MS 3000
 #define WINDOWS_ALT_TAB_INITIAL_STEP_DELAY_MS 40
 
-// Слой с цифрами (сейчас #5)
-#define NUM_LAYER 5
+// Номер слоя с цифрами
+#define NUM_LAYER 1
 // Таймаут для слоя с цифрами
 #define NUM_LAYER_TIMEOUT_MS 2000
 
@@ -57,7 +57,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case LANG_RU:
             switch_to_ru();
             return false;
-        case NUM_LAYER_5_TIMEOUT:
+        case NUM_LAYER_TIMEOUT:
             temporary_layer_activate(NUM_LAYER, NUM_LAYER_TIMEOUT_MS);
             return false;
     }
